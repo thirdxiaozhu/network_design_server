@@ -114,6 +114,7 @@ class Server:
             1: self.LoginEvent,
             2: self.RegistEvent,
             3: self.addFriend,
+            
         }
 
         method = numbers.get(dict.get("msgType"))
