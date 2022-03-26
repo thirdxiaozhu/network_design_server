@@ -74,6 +74,7 @@ class Server:
         while True:
             try:
                 data = self.connections[fd].recv(1024)
+                print(data.decode())
                 if not data and not datas:
                     self.epoll_fd.unregister(fd)
                     self.connections[fd].close()
@@ -114,7 +115,7 @@ class Server:
             1: self.LoginEvent,
             2: self.RegistEvent,
             3: self.addFriend,
-            
+            4: self.searchFriend,
         }
 
         method = numbers.get(dict.get("msgType"))
@@ -147,6 +148,18 @@ class Server:
         print(result)
         ret = {'code': result}
         self.datalist[fd] = json.dumps(ret)
+
+        self.epoll_fd.modify(
+            fd, select.EPOLLIN | select.EPOLLOUT | select.EPOLLERR | select.EPOLLHUP)
+
+    def searchFriend(self, fd, dict):
+        result = self.sql.searchFriend(dict)
+        print(result)
+        if result:
+            result['code'] = 1000
+        else:
+            result = {"code": 1001}
+        self.datalist[fd] = json.dumps(result)
 
         self.epoll_fd.modify(
             fd, select.EPOLLIN | select.EPOLLOUT | select.EPOLLERR | select.EPOLLHUP)

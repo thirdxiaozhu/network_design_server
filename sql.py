@@ -27,14 +27,13 @@ class Sql:
             return 1001
 
     def searchUser(self, dict):
-        sql = "SELECT `account`, `nickname`, `signature` FROM `Users` WHERE `account` = %s AND `password` = %s;"
+        sql_1 = "SELECT `account`, `nickname`, `signature` FROM `Users` WHERE `account` = %s AND `password` = %s;"
         try:
-            print(sql)
-            self.cursor.execute(sql,(dict.get("account"), dict.get("password")))
-            result = self.cursor.fetchone()
-            print(result)
-            if len(result) == 3:
-                return result
+            self.cursor.execute(sql_1,(dict.get("account"), dict.get("password")))
+            result_1 = self.cursor.fetchone()
+            print(result_1)
+            if result_1:
+                return result_1
             else:
                 return None
         except:
@@ -56,7 +55,6 @@ class Sql:
             self.cursor.execute(sql_2,(dict.get("account"), dict.get("target"), dict.get("target"), dict.get("account")))
             result_2 = self.cursor.fetchone()
 
-            print(result_1, result_2)
             #如果用户存在并且Friends表中没有这俩人好友关系
             if result_1:
                 if result_2 is None:
@@ -72,6 +70,25 @@ class Sql:
             # 如果发生错误则回滚
             self.db.rollback()
             return 0
+
+    def searchFriend(self, dict):
+        sql_2 = """SELECT `account_1`, `nickname`,`signature` FROM `Friends`, `Users` WHERE `account_2` = %s AND `Friends`.`account_1` = `Users`.`account`
+                   UNION
+                   SELECT `account_2`, `nickname`,`signature` FROM `Friends`, `Users` WHERE `account_1` = %s AND `Friends`.`account_2` = `Users`.`account`;
+                """
+        try:
+            self.cursor.execute(sql_2,(dict.get("account"), dict.get("account")))
+            result = self.cursor.fetchall()
+            if result:
+                return {"friends" : result}
+            else:
+                return None
+        except:
+            # 如果发生错误则回滚
+            self.db.rollback()
+            return 0
+
+        
 
 
 
