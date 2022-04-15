@@ -6,6 +6,7 @@ import time
 import pymysql
 import Protocol
 import threading
+from queue import Queue
 from FileServer import FileServer
 from sql import Sql
 from datetime import datetime
@@ -13,18 +14,20 @@ from datetime import datetime
 
 def main():
     sql = Sql()
-    server = Server(sql)
     fileserver = FileServer()
+    server = Server(sql, fileserver)
     server.initiateServer()
 
 
 class Server:
-    def __init__(self, sql):
+    def __init__(self, sql, fileserver):
         ip_port = ('0.0.0.0', 8080)
         back_log = 10
         buffer_size = 1024
 
         self.sql = sql
+        self.fileserver = fileserver
+        self.fd_fileToTrans = dict()
         # 套接字类型AF_INET, socket.SOCK_STREAM   tcp协议，基于流式的协议
         self.ser = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         # 对socket的配置重用ip和端口号
@@ -46,7 +49,8 @@ class Server:
         self.addresses = {}
         self.datalist = {}
         self.threads = {}
-        self.fddict = {}
+        self.fddict = {}   #绑定已连接的客户ID和对应的fd
+        self.fdfiletrans = {}
 
     def initiateServer(self):
         while True:
@@ -71,7 +75,6 @@ class Server:
         conn, addr = self.ser.accept()
         # conn.send(("连接成功，服务端端口：%s, 本机客户端端口：%s" % (8832, addr[1])).encode())
         conn.setblocking(0)
-        print(conn, addr)
         self.epoll_fd.register(
             conn.fileno(), select.EPOLLIN | select.EPOLLERR | select.EPOLLHUP)
         self.connections[conn.fileno()] = conn
@@ -83,7 +86,6 @@ class Server:
         while True:
             try:
                 data = self.connections[fd].recv(8192)
-                print(len(data))
                 if not data and not datas:
                     self.epoll_fd.unregister(fd)
                     self.connections[fd].close()
@@ -132,6 +134,8 @@ class Server:
             7: self.closeChatWindow,
             8: self.sendFile,
             9: self.setLogout,
+            11: self.updateHead,
+            12: self.getFileRequest
         }
 
         method = numbers.get(dict.get("msgType"))
@@ -144,12 +148,15 @@ class Server:
 
         if userinfo:
             userinfo['code'] = 1000
+            #绑定登录用户和客户端fd
             self.fddict[account] = fd
-            self.broadcastLogin(account, 1)
+            self.fd_fileToTrans[fd] = Queue()
+            self.broadcastLogin(account, 1) #广播
         else:
             userinfo = {'code': 1001}
 
         userinfo['msgType'] = 1
+        userinfo['fd'] = fd
 
         self.datalist[fd] = json.dumps(userinfo)
         self.epoll_fd.modify(
@@ -238,8 +245,9 @@ class Server:
         if result == 1000:
             account = dict.get("account")
             self.broadcastLogin(account, 0)
+            self.fileserver.closeEvent(fd)
             self.fddict.pop(account)
-            print(self.fddict)
+            print("setlogout", self.fddict)
 
     def sendFile(self, fd, dict):
         pass
@@ -260,7 +268,35 @@ class Server:
 
                 self.epoll_fd.modify(
                     clientFd, select.EPOLLIN | select.EPOLLOUT | select.EPOLLERR | select.EPOLLHUP)
+
+    def updateHead(self, fd, dictData):
+        result = self.sql.updateHead(dictData)
+        
+        if result == 1000:
+            msg = dict(msgType=Protocol.Protocol.HEADSCUL, code=1000, filepath = dictData.get("filepath"))
+        else:
+            msg = dict(msgType=Protocol.Protocol.HEADSCUL, code=1001)
+
                 
+        self.datalist[fd] = json.dumps(msg, cls=Protocol.DateEncoder)
+        self.epoll_fd.modify(
+            fd, select.EPOLLIN | select.EPOLLOUT | select.EPOLLERR | select.EPOLLHUP)
+
+    def addFdFileTrans(self, client):
+        pass
+
+    def getFileRequest(self, fd, data):
+        def waitFileTransReady(fd):
+            while True:
+                if self.fileserver.fdIsReady(fd):
+                    print("ookk")
+                    self.fileserver.putFilePath(fd, data.get("filepath"))
+                    break
+
+        thread = Protocol.KThread(
+            target=waitFileTransReady, args=(fd,))
+        thread.start()
+        
 
 
 if __name__ == "__main__":

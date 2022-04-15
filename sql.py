@@ -30,12 +30,13 @@ class Sql:
             return 1001
 
     def searchUser(self, dict):
-        sql = "SELECT `account`, `nickname`, `signature` FROM `Users` WHERE `account` = %s AND `password` = %s;"
+        sql = "SELECT `account`, `nickname`, `signature`, `isonline`, `headscul` FROM `Users` WHERE `account` = %s AND `password` = %s;"
         try:
             self.cursor.execute(
                 sql, (dict.get("account"), dict.get("password")))
             result = self.cursor.fetchone()
-            if result:
+            #如果用户存在并且未登录
+            if result and result.get("isonline") == 0:
                 sql_1 = "UPDATE `Users` SET `isonline` = %s WHERE `account` = %s;"
                 self.cursor.execute(sql_1, (1, dict.get("account")))
                 self.db.commit()
@@ -165,6 +166,19 @@ class Sql:
             print(e)
             self.db.rollback()
             return 1001
+
+    def updateHead(self, dict):
+        sql = "UPDATE `Users` SET `headscul` = %s WHERE `account` = %s;"
+        try:
+            self.cursor.execute(sql, (dict.get("filepath"), dict.get("account")))
+            self.db.commit()
+            return 1000
+        except Exception as e:
+            # 如果发生错误则回滚
+            print(e)
+            self.db.rollback()
+            return 1001
+
 
     def __del__(self):
         self.db.close()

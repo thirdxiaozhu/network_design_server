@@ -13,6 +13,7 @@ class Protocol:
     searchFriend = 4
 
     broadcastLogin = 10
+    HEADSCUL=11
 
     def __init__(self) -> None:
         pass
