@@ -14,6 +14,7 @@ class Protocol:
 
     broadcastLogin = 10
     HEADSCUL=11
+    DELETEFRIEND = 13
 
     def __init__(self) -> None:
         pass

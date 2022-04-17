@@ -135,7 +135,8 @@ class Server:
             8: self.sendFile,
             9: self.setLogout,
             11: self.updateHead,
-            12: self.getFileRequest
+            12: self.getFileRequest,
+            13: self.deleteFriend,
         }
 
         method = numbers.get(dict.get("msgType"))
@@ -172,9 +173,16 @@ class Server:
 
     def addFriend(self, fd, dict):
         result = self.sql.addFriend(dict)
-        print(result)
-        ret = {'code': result}
+        ret = {'code': result, "msgType": 3}
         self.datalist[fd] = json.dumps(ret)
+
+        self.epoll_fd.modify(
+            fd, select.EPOLLIN | select.EPOLLOUT | select.EPOLLERR | select.EPOLLHUP)
+
+    def deleteFriend(self, fd, dataDict):
+        result = self.sql.deleteFriend(dataDict)
+        resultDict = dict(msgType=Protocol.Protocol.DELETEFRIEND, code = result)
+        self.datalist[fd] = json.dumps(resultDict)
 
         self.epoll_fd.modify(
             fd, select.EPOLLIN | select.EPOLLOUT | select.EPOLLERR | select.EPOLLHUP)

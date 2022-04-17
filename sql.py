@@ -81,10 +81,28 @@ class Sql:
             self.db.rollback()
             return 0
 
+    def deleteFriend(self, dict):
+        sql_1 = """
+                    DELETE FROM `SingalChats` WHERE (`sender` = %s AND `recipient` = %s) OR (`sender` = %s AND `recipient` = %s);
+                """
+        sql_2 = """
+                    DELETE FROM `Friends` WHERE (`account_1` = %s AND `account_2` = %s) OR (`account_1` = %s AND `account_2` = %s);
+                """
+        try:
+            self.cursor.execute(sql_1, (dict.get("account"), dict.get("target"), dict.get("target"), dict.get("account")))
+            self.db.commit()
+            self.cursor.execute(sql_2, (dict.get("account"), dict.get("target"), dict.get("target"), dict.get("account")))
+            self.db.commit()
+
+            return 1000
+        except Exception as e:
+            print(e)
+            return 1001
+
     def searchFriend(self, dict):
-        sql = """SELECT `account_1`, `nickname`,`signature`, `isonline` FROM `Friends`, `Users` WHERE `account_2` = %s AND `Friends`.`account_1` = `Users`.`account`
+        sql = """SELECT `account_1`, `nickname`,`signature`, `isonline`, `headscul` FROM `Friends`, `Users` WHERE `account_2` = %s AND `Friends`.`account_1` = `Users`.`account`
                    UNION
-                   SELECT `account_2`, `nickname`,`signature`, `isonline` FROM `Friends`, `Users` WHERE `account_1` = %s AND `Friends`.`account_2` = `Users`.`account`;
+                   SELECT `account_2`, `nickname`,`signature`, `isonline`, `headscul` FROM `Friends`, `Users` WHERE `account_1` = %s AND `Friends`.`account_2` = `Users`.`account`;
                 """
         try:
             self.cursor.execute(
