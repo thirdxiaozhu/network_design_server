@@ -1,4 +1,6 @@
 import pymysql
+import random
+from Protocol import Protocol
 from datetime import datetime
 
 
@@ -117,10 +119,28 @@ class Sql:
             self.db.rollback()
             return 0
 
+    def sendMessage(self, dict):
+        type = dict.get("msgType") 
+        if type == Protocol.SENDMESSAGE:
+            sql = "INSERT INTO `SingalChats`(`sender`, `recipient`, `message`,`form`) VALUES(%s,%s,%s,%s);"
+        elif type == Protocol.SENDGROUPMESSAGE:
+            sql = "INSERT INTO `GroupChats`(`sender`, `groupid`, `message`,`form`) VALUES(%s,%s,%s,%s);"
+
+        try:
+            self.cursor.execute(
+                sql, (dict.get("account"), dict.get("target"), dict.get("message"), dict.get("form")))
+            self.db.commit()
+            return 1000
+        except Exception as e:
+            print(e)
+            # 如果发生错误则回滚
+            self.db.rollback()
+            return 1001
+
     def getMessageRecord(self, dict):
-        sql = """SELECT `sender`, `recipient`, `message`, `time` FROM `SingalChats` WHERE `sender` = %s AND `recipient` = %s 
+        sql = """SELECT `sender`, `recipient`, `message`, `time`, `form` FROM `SingalChats` WHERE `sender` = %s AND `recipient` = %s 
                  UNION
-                 SELECT `sender`, `recipient`, `message`, `time` FROM `SingalChats` WHERE `recipient` = %s AND `sender` = %s
+                 SELECT `sender`, `recipient`, `message`, `time`, `form` FROM `SingalChats` WHERE `recipient` = %s AND `sender` = %s
                 ORDER BY `time`;
              """
         try:
@@ -137,31 +157,51 @@ class Sql:
             self.db.rollback()
             return 0
 
-    def sendMessage(self, dict):
-        print(dict)
-        sql = "INSERT INTO `SingalChats`(`sender`, `recipient`, `message`) VALUES(%s,%s,%s);"
-
+    def getGroupMessageRecord(self, dict):
+        sql = """SELECT `groupid`, `sender`, `message`, `time`, `form` FROM `GroupChats` WHERE `groupid` = %s 
+                ORDER BY `time`;
+             """
         try:
-            self.cursor.execute(
-                sql, (dict.get("account"), dict.get("target"), dict.get("message")))
-            self.db.commit()
-            return 1000
+            self.cursor.execute(sql, (dict.get("target")))
+            result = self.cursor.fetchall()
+            if result:
+                return {"messages": result}
+            else:
+                return None
         except Exception as e:
             print(e)
             # 如果发生错误则回滚
             self.db.rollback()
-            return 1001
+            return 0
 
     def getNewMessage(self, thread_sql, dict, lastTime):
-        sql = """SELECT `sender`, `recipient`, `message`, `time` FROM `SingalChats` WHERE `sender` = %s AND `recipient` = %s AND `time` > %s
+        sql = """SELECT `sender`, `recipient`, `message`, `time`, `form` FROM `SingalChats` WHERE `sender` = %s AND `recipient` = %s AND `time` > %s
                  UNION
-                 SELECT `sender`, `recipient`, `message`, `time` FROM `SingalChats` WHERE `recipient` = %s AND `sender` = %s AND `time` > %s
+                 SELECT `sender`, `recipient`, `message`, `time`, `form` FROM `SingalChats` WHERE `recipient` = %s AND `sender` = %s AND `time` > %s
                  ORDER BY `time`;
               """
 
         try:
             thread_sql.cursor.execute(sql, (dict.get("account"), dict.get(
                 "target"), lastTime, dict.get("account"), dict.get("target"), lastTime))
+            result = thread_sql.cursor.fetchall()
+            if result:
+                return {"messages": result}
+            else:
+                return None
+        except Exception as e:
+            print(e)
+            # 如果发生错误则回滚
+            thread_sql.db.rollback()
+            return 0
+
+    def getNewGroupMessage(self, thread_sql, dict, lastTime):
+        sql = """SELECT `groupid`, `sender`, `message`, `time`, `form` FROM `GroupChats` WHERE `groupid` = %s AND `time` > %s
+                 ORDER BY `time`;
+              """
+
+        try:
+            thread_sql.cursor.execute(sql, (dict.get("target"), lastTime))
             result = thread_sql.cursor.fetchall()
             if result:
                 return {"messages": result}
@@ -196,6 +236,66 @@ class Sql:
             print(e)
             self.db.rollback()
             return 1001
+
+    def setGroup(self, dict):
+        sql_1 = "SELECT * FROM `Groups` WHERE `groupid` = %s "
+        sql_2 = "INSERT INTO `Groups`(`groupid`, `groupname`, `master`, `groupscal`) VALUES(%s,  %s, %s, %s);"
+        sql_3 = "INSERT INTO `GroupMember`(`groupid`, `userid`) VALUES(%s, %s)"
+
+        try:
+            while True:
+                groupid = str(random.randint(100000000, 999999999))
+                self.cursor.execute(sql_1, (groupid))
+                result = self.cursor.fetchone()
+                if result is None:
+                    break
+            self.cursor.execute(sql_2, (groupid, dict.get("groupname"), dict.get("account"), dict.get("picpath")))
+            self.db.commit()
+            self.cursor.execute(sql_3, (groupid, dict.get("account")))
+            self.db.commit()
+
+            return 1000
+        except Exception as e:
+            return 1001
+
+    def getGroups(self, dict):
+        sql = """SELECT  `groupid`, `groupname`, `master`, `groupscal` FROM `Groups` WHERE `groupid` = SOME(SELECT `groupid` FROM `GroupMember` WHERE  `userid` =%s);
+                """
+        try:
+            self.cursor.execute(sql, (dict.get("account")))
+            result = self.cursor.fetchall()
+            if result:
+                return {"groups": result}
+            else:
+                return None
+        except:
+            # 如果发生错误则回滚
+            self.db.rollback()
+            return 0
+
+    def getGroupMembers(self, dict):
+        sql = """SELECT  `account`, `nickname`, `isonline` FROM `Users` WHERE `account` = SOME(SELECT `userid` FROM `GroupMember` WHERE  `groupid` =%s)
+                ORDER BY `isonline` DESC;
+                """
+        try:
+            self.cursor.execute(sql, (dict.get("target")))
+            result = self.cursor.fetchall()
+            if result:
+                return {"members": result, "groupid": dict.get("target")}
+            else:
+                return None
+        except:
+            # 如果发生错误则回滚
+            self.db.rollback()
+            return 0
+
+    def deleteGroup(self, dict):
+        sql_1 = """
+                    DELETE FROM `SingalChats` WHERE (`sender` = %s AND `recipient` = %s) OR (`sender` = %s AND `recipient` = %s);
+                """
+        sql_2 = """
+                    DELETE FROM `Friends` WHERE (`account_1` = %s AND `account_2` = %s) OR (`account_1` = %s AND `account_2` = %s);
+                """
 
 
     def __del__(self):

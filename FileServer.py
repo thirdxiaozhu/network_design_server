@@ -103,7 +103,7 @@ class FileServer:
                     if filesize - recvd_size > 1024:
                         data = conn.recv(1024)
                         recvd_size += len(data)
-                        print("aa",recvd_size)
+                        print(recvd_size)
                     else:
                         data = conn.recv(filesize - recvd_size)
                         print(filesize - recvd_size)

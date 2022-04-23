@@ -11,10 +11,17 @@ class Protocol:
     Regist = 2
     addFriend = 3
     searchFriend = 4
+    SENDMESSAGE = 6
 
     broadcastLogin = 10
     HEADSCUL=11
     DELETEFRIEND = 13
+    SETGROUP=14
+    GETGROUPS = 15
+    SENDGROUPMESSAGE = 17
+    GET_GROUP_MESSAGE_RECORD = 18
+    GET_NEW_GROUP_MESSAGE = 20
+    GET_GROUP_MEMBERS = 21
 
     def __init__(self) -> None:
         pass

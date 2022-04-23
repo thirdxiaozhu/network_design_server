@@ -49,6 +49,7 @@ class Server:
         self.addresses = {}
         self.datalist = {}
         self.threads = {}
+        self.groupThreads = {}
         self.fddict = {}   #绑定已连接的客户ID和对应的fd
         self.fdfiletrans = {}
 
@@ -80,6 +81,7 @@ class Server:
         self.connections[conn.fileno()] = conn
         self.addresses[conn.fileno()] = addr
         self.threads[conn.fileno()] = {}
+        self.groupThreads[conn.fileno()] = {}
 
     def receiveEvent(self, fd):
         datas = ''
@@ -137,6 +139,12 @@ class Server:
             11: self.updateHead,
             12: self.getFileRequest,
             13: self.deleteFriend,
+            14: self.setGroup,
+            15: self.getGroups,
+            16: self.deleteGroup,
+            17: self.sendGroupMessage,
+            18: self.getGroupMessageRecord,
+            19: self.closeGroupChatWindow,
         }
 
         method = numbers.get(dict.get("msgType"))
@@ -237,16 +245,79 @@ class Server:
 
             time.sleep(1)
 
+
+    def getGroupMessageRecord(self, fd, dict):
+        thread = Protocol.KThread(
+            target=self.groupMessageThreadTarget, args=(dict, fd))
+        self.groupThreads[fd][dict.get("target")] = thread
+        thread.start()
+
+        result = self.sql.getGroupMessageRecord(dict)
+        if result:
+            result['code'] = 1000
+        else:
+            result = {"code": 1001}
+
+        result['msgType'] = Protocol.Protocol.GET_GROUP_MESSAGE_RECORD
+        self.datalist[fd] = json.dumps(result, cls=Protocol.DateEncoder)
+
+        self.epoll_fd.modify(
+            fd, select.EPOLLIN | select.EPOLLOUT | select.EPOLLERR | select.EPOLLHUP)
+
+        #time.sleep(2)
+
+        #result = self.sql.getGroupMembers(dict)
+        #if result:
+        #    result['code'] = 1000
+        #else:
+        #    result = {"code": 1001}
+
+        #result['msgType'] = Protocol.Protocol.GET_GROUP_MEMBERS
+        #self.datalist[fd] = json.dumps(result, cls=Protocol.DateEncoder)
+
+        ##print("fddddddddddddddddddddddddddddd" + self.datalist[fd])
+
+        #self.epoll_fd.modify(
+        #    fd, select.EPOLLIN | select.EPOLLOUT | select.EPOLLERR | select.EPOLLHUP)
+
+
+    def groupMessageThreadTarget(self, dict, fd):
+        lastTime = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")
+        thread_sql = Sql()
+        while True:
+            result = self.sql.getNewGroupMessage(thread_sql, dict, lastTime)
+            lastTime = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")
+
+            #没有新消息就不返回
+            if result:
+                result['code'] = 1000
+                result['msgType'] = Protocol.Protocol.GET_NEW_GROUP_MESSAGE
+                self.datalist[fd] = json.dumps(
+                    result, cls=Protocol.DateEncoder)
+
+                self.epoll_fd.modify(
+                    fd, select.EPOLLIN | select.EPOLLOUT | select.EPOLLERR | select.EPOLLHUP)
+
+            time.sleep(1)
+
     def sendMessage(self, fd, dict):
         if dict.get("form") == Protocol.MessageFormat.IMAGE:
             #recThread = threading.thread(target=reviceFile, args=())
             pass
         self.sql.sendMessage(dict)
 
+    def sendGroupMessage(self, fd, dict):
+        self.sql.sendMessage(dict)
+
     def closeChatWindow(self, fd, dict):
         target = dict.get("target")
         self.threads[fd].get(target).kill()
         self.threads[fd].pop(target)
+
+    def closeGroupChatWindow(self, fd, dict):
+        target = dict.get("target")
+        self.groupThreads[fd].get(target).kill()
+        self.groupThreads[fd].pop(target)
 
     def setLogout(self, fd, dict):
         result = self.sql.Logout(dict)
@@ -304,7 +375,34 @@ class Server:
         thread = Protocol.KThread(
             target=waitFileTransReady, args=(fd,))
         thread.start()
-        
+
+    def setGroup(self, fd, dictData):
+        result = self.sql.setGroup(dictData)
+        if result == 1000:
+            msg = dict(msgType=Protocol.Protocol.SETGROUP, code=1000)
+        else:
+            msg = dict(msgType=Protocol.Protocol.SETGROUP, code=1001)
+
+        self.datalist[fd] = json.dumps(msg, cls=Protocol.DateEncoder)
+        self.epoll_fd.modify(
+            fd, select.EPOLLIN | select.EPOLLOUT | select.EPOLLERR | select.EPOLLHUP)
+
+    def getGroups(self, fd, dict):
+        result = self.sql.getGroups(dict)
+        if result:
+            result['code'] = 1000
+        else:
+            result = {"code": 1001}
+
+        result['msgType'] = Protocol.Protocol.GETGROUPS
+        self.datalist[fd] = json.dumps(result)
+
+        self.epoll_fd.modify(
+            fd, select.EPOLLIN | select.EPOLLOUT | select.EPOLLERR | select.EPOLLHUP)
+
+    def deleteGroup(self, fd, dict):
+        result = self.sql.deleteGroup(dict)
+
 
 
 if __name__ == "__main__":
