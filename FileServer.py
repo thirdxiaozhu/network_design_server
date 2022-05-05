@@ -68,7 +68,7 @@ class FileServer:
                     fhead = struct.pack('128sl', path.encode('utf-8'), len(bytes))
                     conn.send(fhead)
 
-                    chunks, chunk_size = len(bytes), 1024
+                    chunks, chunk_size = len(bytes), 8192
                     list = [bytes[i:i+chunk_size] for i in range(0, chunks, chunk_size) ]
                     for i in list:
                         print(len(i))
@@ -96,6 +96,12 @@ class FileServer:
                 print ('file new name is {0}, filesize if {1}'.format(str(fn),filesize))
                 recvd_size = 0  # 定义已接收文件的大小
                 # 存储在该脚本所在目录下面 
+
+                dir = str(fn).split("/")
+                path = '/'.join(dir[:-1])
+                if not os.path.exists(path):
+                    os.mkdir(path)                       # 创建路径
+
                 fp = open('./' + str(fn), 'wb')
                 print ('start receiving...')
                 # 将分批次传输的二进制流依次写入到文件
@@ -116,7 +122,6 @@ class FileServer:
         conn.close()
 
     def fdIsReady(self, fd):
-        #return self.fd_ready[str(fd)]
         return self.fd_dict.__contains__(str(fd)) and self.fd_ready.__contains__(str(fd))
 
     def closeEvent(self, fd):

@@ -1,5 +1,7 @@
+from tokenize import group
 import pymysql
 import random
+import os
 from Protocol import Protocol
 from datetime import datetime
 
@@ -32,7 +34,7 @@ class Sql:
             return 1001
 
     def searchUser(self, dict):
-        sql = "SELECT `account`, `nickname`, `signature`, `isonline`, `headscul` FROM `Users` WHERE `account` = %s AND `password` = %s;"
+        sql = "SELECT `account`, `nickname`, `signature`, `isonline`, `headscul`,`type` FROM `Users` WHERE `account` = %s AND `password` = %s;"
         try:
             self.cursor.execute(
                 sql, (dict.get("account"), dict.get("password")))
@@ -42,9 +44,10 @@ class Sql:
                 sql_1 = "UPDATE `Users` SET `isonline` = %s WHERE `account` = %s;"
                 self.cursor.execute(sql_1, (1, dict.get("account")))
                 self.db.commit()
+                result['code'] = 1000
                 return result
             else:
-                return None
+                return {'code': 1001}
         except Exception as e:
             # 如果发生错误则回滚
             print(e)
@@ -82,6 +85,36 @@ class Sql:
             # 如果发生错误则回滚
             self.db.rollback()
             return 0
+
+    def addGroup(self, dict):
+        sql_1 = "SELECT `groupid` FROM `Groups` WHERE `groupid` = %s;"
+        sql_2 = """
+                    SELECT `groupid` FROM `GroupMember` WHERE `groupid` = %s AND `userid` = %s
+                """
+        try:
+            self.cursor.execute(sql_1, (dict.get("target")))
+            result_1 = self.cursor.fetchone()
+
+            self.cursor.execute(sql_2, (dict.get("target"), dict.get("account")))
+            result_2 = self.cursor.fetchone()
+
+            #如果用户存在并且Friends表中没有这俩人好友关系
+            if result_1:
+                if result_2 is None:
+                    sql = "INSERT INTO GroupMember(groupid, userid) VALUES(%s,%s);"
+                    self.cursor.execute(
+                        sql, (dict.get("target"), dict.get("account")))
+                    self.db.commit()
+                    return 1000
+                else:
+                    return 1002
+            else:
+                return 1001
+        except:
+            # 如果发生错误则回滚
+            self.db.rollback()
+            return 0
+
 
     def deleteFriend(self, dict):
         sql_1 = """
@@ -225,6 +258,18 @@ class Sql:
             self.db.rollback()
             return 1001
 
+    def changeStatus(self, dict):
+        sql = "UPDATE `Users` SET `isonline` = %s WHERE `account` = %s;"
+        try:
+            self.cursor.execute(sql, (dict.get("status"), dict.get("account")))
+            self.db.commit()
+            return 1000
+        except Exception as e:
+            # 如果发生错误则回滚
+            print(e)
+            self.db.rollback()
+            return 1001
+
     def updateHead(self, dict):
         sql = "UPDATE `Users` SET `headscul` = %s WHERE `account` = %s;"
         try:
@@ -291,11 +336,93 @@ class Sql:
 
     def deleteGroup(self, dict):
         sql_1 = """
-                    DELETE FROM `SingalChats` WHERE (`sender` = %s AND `recipient` = %s) OR (`sender` = %s AND `recipient` = %s);
+                    DELETE FROM `GroupChats` WHERE `sender` = %s AND `groupid` = %s;
                 """
         sql_2 = """
-                    DELETE FROM `Friends` WHERE (`account_1` = %s AND `account_2` = %s) OR (`account_1` = %s AND `account_2` = %s);
+                    DELETE FROM `GroupMember` WHERE `userid` = %s AND `groupid` = %s;
                 """
+        try:
+            self.cursor.execute(sql_1, (dict.get("account"), dict.get("target")))
+            self.db.commit()
+            self.cursor.execute(sql_2, (dict.get("account"), dict.get("target")))
+            self.db.commit()
+
+            return 1000
+        except Exception as e:
+            print(e)
+            return 1001
+
+    def dismissGroup(self, dict):
+        groupid = dict.get("target")
+        sql_1 = """
+                    DELETE FROM `GroupChats` WHERE `groupid` = %s;
+                """
+        sql_2 = """
+                    DELETE FROM `GroupMember` WHERE `groupid` = %s;
+                """
+        sql_3 = """
+                    DELETE FROM `Groups` WHERE `groupid` = %s;
+                """
+        sql_4 = """
+                    DELETE FROM `GroupFile` WHERE `groupid` = %s;
+                """
+        try:
+            self.cursor.execute(sql_1, (groupid))
+            self.db.commit()
+            self.cursor.execute(sql_2, (groupid))
+            self.db.commit()
+            self.cursor.execute(sql_3, (groupid))
+            self.db.commit()
+            self.cursor.execute(sql_4, (groupid))
+            self.db.commit()
+
+            return 1000
+        except Exception as e:
+            print(e)
+            return 1001
+
+    def sendGroupFile(self, dict):
+        sql = "INSERT INTO `GroupFile`(`groupid`, `uploader`, `path`) VALUES(%s,  %s, %s);"
+        sql_2 = """SELECT `groupid`, `uploader`, `uploadtime`, `path`, `times` FROM `GroupFile` WHERE `groupid` = %s AND `uploader` = %s  AND `path` = %s
+                """
+        try:
+            self.cursor.execute(sql, (dict.get("groupid"), dict.get("uploader"), dict.get("path")))
+            self.db.commit()
+            self.cursor.execute(sql_2, (dict.get("groupid"), dict.get("uploader"), dict.get("path")))
+            result = self.cursor.fetchone()
+
+            result['code'] = 1000
+            return result
+        except Exception as e:
+            print(e)
+            return {'code': 1001}
+
+    def getGroupFile(self, dict):
+        sql = """SELECT  `uploader`, `uploadtime`, `path`, `times` FROM `GroupFile` WHERE `groupid` = %s
+                ORDER BY `uploadtime` DESC;
+                """
+        try:
+            self.cursor.execute(sql, (dict.get("groupid")))
+            result = self.cursor.fetchall()
+            if result:
+                return {"files": result, "groupid": dict.get("target")}
+            else:
+                return None
+        except:
+            # 如果发生错误则回滚
+            self.db.rollback()
+            return 0
+
+    def downloadGroupFile(self, path, groupid):
+        sql = "UPDATE `GroupFile` SET `times` = `times` + 1 WHERE `groupid` = %s AND `path` = %s ;"
+        try:
+            self.cursor.execute(sql, (groupid, path))
+            self.db.commit()
+            return 1000
+        except:
+            # 如果发生错误则回滚
+            self.db.rollback()
+            return 1001
 
 
     def __del__(self):

@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+  
+<meta http-equiv="Content-Type" content="text/html;charset=gb2312"/>
+<meta name="sogou_site_verification" content="Npf45fHu06"/>
+  
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="HandheldFriendly" content="true">
+<link rel="profile" href="http://gmpg.org/xfn/11">
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel="alternate" type="application/rss+xml" title="良许Linux教程网 &raquo; Feed" href="https://www.lxlinux.net/feed" />
+<link rel="alternate" type="application/rss+xml" title="良许Linux教程网 &raquo; 评论Feed" href="https://www.lxlinux.net/comments/feed" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/12.0.0-1\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/12.0.0-1\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/www.lxlinux.net\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.4.4"}};
+			/*! This file is auto-generated */
+			!function(e,a,t){var r,n,o,i,p=a.createElement("canvas"),s=p.getContext&&p.getContext("2d");function c(e,t){var a=String.fromCharCode;s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,e),0,0);var r=p.toDataURL();return s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,t),0,0),r===p.toDataURL()}function l(e){if(!s||!s.fillText)return!1;switch(s.textBaseline="top",s.font="600 32px Arial",e){case"flag":return!c([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])&&(!c([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!c([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]));case"emoji":return!c([55357,56424,55356,57342,8205,55358,56605,8205,55357,56424,55356,57340],[55357,56424,55356,57342,8203,55358,56605,8203,55357,56424,55356,57340])}return!1}function d(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(i=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},o=0;o<i.length;o++)t.supports[i[o]]=l(i[o]),t.supports.everything=t.supports.everything&&t.supports[i[o]],"flag"!==i[o]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[i[o]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(r=t.source||{}).concatemoji?d(r.concatemoji):r.wpemoji&&r.twemoji&&(d(r.twemoji),d(r.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='wp-block-library-css'  href='https://www.lxlinux.net/wp-includes/css/dist/block-library/style.min.css?ver=5.4.4' type='text/css' media='all' />
+<link rel='stylesheet' id='cptch_stylesheet-css'  href='https://www.lxlinux.net/wp-content/plugins/captcha-bws/css/front_end_style.css?ver=5.0.9' type='text/css' media='all' />
+<link rel='stylesheet' id='dashicons-css'  href='https://www.lxlinux.net/wp-includes/css/dashicons.min.css?ver=5.4.4' type='text/css' media='all' />
+<link rel='stylesheet' id='cptch_desktop_style-css'  href='https://www.lxlinux.net/wp-content/plugins/captcha-bws/css/desktop_style.css?ver=5.0.9' type='text/css' media='all' />
+<link rel='stylesheet' id='usp_style-css'  href='https://www.lxlinux.net/wp-content/plugins/user-submitted-posts/resources/usp.css?ver=20200911' type='text/css' media='all' />
+<link rel='stylesheet' id='iux-style-css'  href='https://www.lxlinux.net/wp-content/themes/iux/style.css?ver=20181203' type='text/css' media='all' />
+<link rel='stylesheet' id='genericons-style-css'  href='https://www.lxlinux.net/wp-content/themes/iux/genericons/genericons/genericons.css?ver=5.4.4' type='text/css' media='all' />
+<link rel='stylesheet' id='flaticon-style-css'  href='https://www.lxlinux.net/wp-content/themes/iux/assets/css/flaticon.css?ver=20181102' type='text/css' media='all' />
+<link rel='stylesheet' id='iux-responsive-style-css'  href='https://www.lxlinux.net/wp-content/themes/iux/responsive.css?ver=20181114' type='text/css' media='all' />
+<script type='text/javascript' src='https://www.lxlinux.net/wp-includes/js/jquery/jquery.js?ver=1.12.4-wp'></script>
+<script type='text/javascript' src='https://www.lxlinux.net/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1'></script>
+<script type='text/javascript' src='https://www.lxlinux.net/wp-content/plugins/links-auto-replacer/public/js/lar-public.js?ver=2.0.0'></script>
+<script type='text/javascript' src='https://www.lxlinux.net/wp-content/plugins/user-submitted-posts/resources/jquery.cookie.js?ver=20200911'></script>
+<script type='text/javascript' src='https://www.lxlinux.net/wp-content/plugins/user-submitted-posts/resources/jquery.parsley.min.js?ver=20200911'></script>
+<script type='text/javascript'>
+var usp_custom_field = "usp_custom_field"; var usp_custom_checkbox = "usp_custom_checkbox"; var usp_case_sensitivity = "false"; var usp_challenge_response = "\u826f\u8bb8Linux"; var usp_min_images = 0; var usp_max_images = 1; var usp_parsley_error = "\u9519\u8bef\u7684\u56de\u5e94\u3002"; var usp_multiple_cats = 0; var usp_existing_tags = 0; var usp_recaptcha_disp = "hide"; var usp_recaptcha_vers = "2"; var usp_recaptcha_key = ""; 
+</script>
+<script type='text/javascript' src='https://www.lxlinux.net/wp-content/plugins/user-submitted-posts/resources/jquery.usp.core.js?ver=20200911'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var simpleLikes = {"ajaxurl":"https:\/\/www.lxlinux.net\/wp-admin\/admin-ajax.php","like":"\u70b9\u8d5e\u8fd9\u7bc7\u6587\u7ae0","unlike":"\u53d6\u6d88\u70b9\u8d5e"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://www.lxlinux.net/wp-content/themes/iux/assets/js/simple-likes-public.js?ver=0.5'></script>
+<link rel='https://api.w.org/' href='https://www.lxlinux.net/wp-json/' />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://www.lxlinux.net/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://www.lxlinux.net/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 5.4.4" />
+<link rel="canonical" href="https://www.lxlinux.net/"/>
+
+<style> .lar_social_share_icon{
+ 				margin: 2px;
+ 				}</style><title>Linux系统常用命令教学,shell脚本入门学习-良许教程网首页</title>
+<meta name="description" content="【良许教程网】是一个专注于分享Linux干货的网站，致力于为广大Linux入门学习者提供Linux自学教程，包括Linux常用命令、Linux系统入门、Linux系统学习、Shell脚本等干货，帮助Linux入门学习者快速进阶提高。" />
+<meta name="keywords" content="良许,Linux系统,Linux入门,Linux学习,Linux教程,Linux命令,Shell脚本,Linux常用命令,Linux" />
+<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style><link rel="icon" href="https://www.lxlinux.net/wp-content/uploads/2020/10/cropped-公众号LOGO-32x32.png" sizes="32x32" />
+<link rel="icon" href="https://www.lxlinux.net/wp-content/uploads/2020/10/cropped-公众号LOGO-192x192.png" sizes="192x192" />
+<link rel="apple-touch-icon" href="https://www.lxlinux.net/wp-content/uploads/2020/10/cropped-公众号LOGO-180x180.png" />
+<meta name="msapplication-TileImage" content="https://www.lxlinux.net/wp-content/uploads/2020/10/cropped-公众号LOGO-270x270.png" />
+		<style type="text/css" id="wp-custom-css">
+			@media only screen and (max-width: 479px) {  .footer-partners { display: block; } 
+	.footer-partners .partner-image {width: 110px;}
+}
+
+.mini-page ul li { padding-right: 100px; }
+
+#content #main .entry-content img {width: auto!important;}		</style>
+		<style type="text/css">
+	
+	/* Theme Colors */
+	/* Primary Color */
+	a:hover,
+	.site-title a,
+	.site-header .search-icon:hover .fa,
+	.posts-nav-menu ul li a:hover,
+	.sidebar .widget a:hover,
+	.site-footer .widget a:hover,
+	.author-box a:hover,
+	article.hentry .edit-link a:hover,
+	.comment-content a:hover,
+	.entry-meta a:hover,
+	.entry-title a:hover,
+	.content-list .entry-title a:hover,
+	.content-list .entry-title a:hover span,
+	.content-list .entry-category a:after,
+	.pagination .page-numbers:hover,
+	.pagination .page-numbers.current,
+	.author-box .author-meta .author-name a:hover,
+	article.hentry .edit-link a,
+	.author-box a,
+	.page-content a,
+	.entry-content a,
+	.comment-author a,
+	.comment-content a,
+	.comment-reply-title small a:hover,
+	.sidebar .widget a,
+	.friend-nav li a:hover,
+	.tooltip .left .contact-info h3,
+	.single #primary .entry-footer .entry-like a,
+	.single #primary .entry-footer .entry-sponsor span,
+	.zhuanti-heading .section-more a:hover,
+	.mini-page h4 a:hover,
+	.mini-page ul li a:hover,
+	.single-breadcrumbs a:hover,
+	.bottom-right span.icon-link .text,
+	.bottom-right a .text,
+	#site-bottom a:hover,
+	#tag_letter li a,
+	#all_tags li a,
+	#all_tags li a:hover {
+		color: #00aeff;
+	}	
+
+	button,
+	.btn,
+	input[type="submit"],
+	input[type="reset"],
+	input[type="button"],
+	.friend .friend-title:before,
+	.partner-title:before,
+	.sidebar .widget .widget-title:before,
+	.related-content .section-title:before,
+	.comment-reply-title:before,
+	.comments-title:before,
+	.posts-nav-menu ul li a:after,
+	.single #primary .entry-footer .entry-like a:hover,
+	.single #primary .entry-footer .entry-sponsor span:hover,
+	.content-list .entry-category a,
+	.entry-tags .tag-links a:hover,
+	.must-log-in a,
+	.widget_tag_cloud .tagcloud a:hover,
+	#tag_letter li a:hover {
+		background-color: #00aeff;		
+	}
+	.sf-menu li li a:hover {
+		background-color: #00aeff !important;
+	}
+	@media only screen and (max-width: 959px) {
+		#primary-menu {
+			background-color: #00aeff;
+		}
+	}
+	.single #primary .entry-footer .entry-like a,
+	.single #primary .entry-footer .entry-like a:hover,
+	.single #primary .entry-footer .entry-sponsor span,
+	#all_tags li a:hover {
+		border-color: #00aeff;
+	}
+	/* Secondary Color */
+	.content-list .entry-title span,
+	.page-content a:hover,
+	.entry-content a:hover,
+	article.hentry .edit-link a:hover,
+	.author-box .author-meta .author-name a:hover,
+	.sidebar .widget_custom_text h4 {
+		color: #ff4c4c;
+	}
+	.sidebar .widget_custom_text:hover {
+		border-color: #ff4c4c;
+	}
+	.sidebar .widget_custom_text .widget-title {
+		background-color: #ff4c4c;
+	}
+
+	/* Tertiary Color */
+	.header-submit a {
+		background-color: #76b852;
+	}
+	.content-list .entry-meta .entry-like a.liked {
+		color: #76b852 !important;
+	}
+			.entry-content p {
+			text-indent: 2em;
+		}
+	
+	
+	 
+		@media only screen and (max-width: 479px) {
+			.site-desc {
+				display: none;
+			}
+		}
+		
+
+	/* Bottom Content Color */
+	.bottom-content {
+	    background: linear-gradient(105deg, #0ecad4, #0ecad4, #50e3c2);
+	}
+</style>
+
+</head>
+
+<body class="home blog wp-custom-logo group-blog hfeed">
+<div id="page" class="site">
+		<div class="top-bar clear">
+
+		<div class="container">
+
+			<nav id="top-nav" class="top-navigation">
+				<div class="menu-posts-container"><ul id="top-menu" class="sf-menu"><li id="menu-item-781" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-781"><a href="https://www.lxlinux.net/zhuanti-full">教程列表</a></li>
+<li id="menu-item-1032" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1032"><a href="https://www.lxlinux.net/tags">热门标签</a></li>
+<li id="menu-item-779" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-779"><a target="_blank" rel="noopener noreferrer" href="https://www.lxlinux.net/posts-by-cat">按目录分类</a></li>
+<li id="menu-item-780" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-780"><a target="_blank" rel="noopener noreferrer" href="https://www.lxlinux.net/posts-100">最新100篇</a></li>
+</ul></div>			</nav><!-- #primary-nav -->
+
+			<div class="header-right">
+				<ul>
+				
+											<li class="header-login">
+							<a href="https://www.lxlinux.net/wp-login.php" title="登录">登录</a>
+						</li>
+					
+											<li class="header-register">
+							<a href="https://www.lxlinux.net/wp-login.php?action=register" title="注册">注册</a>
+						</li>
+						
+
+					
+
+									<li class="header-submit">
+												<a href="https://www.lxlinux.net/wp-login.php?redirect_to=https://www.lxlinux.net/tougao" title="用户投稿">投稿</a>
+					</li>	
+				
+				</ul>
+		
+			</div><!-- .header-right -->
+
+		</div><!-- .container -->
+
+	</div><!--.top-bar-->
+
+	
+	<header id="masthead" class="site-header clear">
+				<div class="container">
+
+			<div class="site-branding">
+
+				
+					<div id="logo">
+						<span class="helper"></span>
+						<a href="https://www.lxlinux.net/" class="custom-logo-link" rel="home"><img width="300" height="100" src="https://www.lxlinux.net/wp-content/uploads/2020/11/网站LOGO-1.png" class="custom-logo" alt="良许Linux教程网" /></a>					</div><!-- #logo -->
+
+				
+								<div class="site-desc">
+										<div class="line1 has-line2">专注Linux学习教程的网站</div>
+					<div class="line2">分享Linux入门及进阶、Linux常用命令等干货</div>
+				</div><!-- .site-desc -->
+				
+			</div><!-- .site-branding -->		
+
+						<nav id="primary-nav" class="primary-navigation tablet_menu_col_6 flexible-menu">
+				<div class="menu-primary-container"><ul id="primary-menu" class="sf-menu"><li id="menu-item-965" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-965"><a rel="nofollow" href="https://www.lxlinux.net" aria-current="page"><i class="fa fa-home" style="margin-right: 5px; color: #ff4c4c;"></i>首页</a></li>
+<li id="menu-item-962" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-962"><a href="https://www.lxlinux.net/zhuanti-full"><i class="fa fa-book" style="margin-right: 5px; color: #00aeff;"></i>教程</a></li>
+<li id="menu-item-957" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-957"><a href="https://www.lxlinux.net/category/knowledge-collection"><i class="fa fa-bookmark" style="margin-right: 5px; color: #ffbe02;"></i>干货</a></li>
+<li id="menu-item-958" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-958"><a rel="nofollow" href="https://www.lxlinux.net/category/softs-tutorial"><i class="fa fa-gears" style="margin-right: 5px; color: #7ac143;"></i>工具</a></li>
+<li id="menu-item-13799" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-13799"><a rel="nofollow" href="https://www.lxlinux.net/category/resources"><i class="fa fa-folder-open" style="margin-right: 5px; color: #fd5c63;"></i>资源</a></li>
+<li id="menu-item-1360" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1360"><a rel="nofollow" href="https://www.lxlinux.net/about"><i class="fa fa-user" style="margin-right: 5px; color: #00aeff;"></i>关于</a></li>
+</ul></div>			</nav><!-- #primary-nav -->
+
+			
+					
+
+		</div><!-- .container -->
+
+	</header><!-- #masthead -->	
+
+	<div class="header-space"></div>
+
+	
+<div id="content" class="site-content site_container container clear">
+
+	<div id="primary" class="content-area clear">	
+
+		
+<div id="featured-slider" class="slider-with-grid">
+
+	<ul class="bxslider">	
+
+		
+
+	<li class="featured-slide hentry">
+
+					<a class="thumbnail-link" href="https://www.lxlinux.net/6526.html">
+				<div class="thumbnail-wrap">
+					<img width="600" height="350" src="https://www.lxlinux.net/wp-content/uploads/2021/11/how-to-sell-used-books-for-the-most-cash-1388970-01-7815a93d4c95431999e1b5192ece1699-600x350.jpg" class="attachment-iux_featured_large_thumb2 size-iux_featured_large_thumb2 wp-post-image" alt="" />				</div><!-- .thumbnail-wrap -->
+			</a>
+		
+		<div class="entry-header clear">			
+			<h2 class="entry-title"><a target="_blank" href="https://www.lxlinux.net/6526.html">程序员必读经典书单（高清PDF版）</a></h2>
+		</div><!-- .entry-header -->
+		<div class="gradient"></div>
+	</li><!-- .featured-slide .hentry -->
+
+		
+
+	<li class="featured-slide hentry">
+
+					<a class="thumbnail-link" href="https://www.lxlinux.net/6505.html">
+				<div class="thumbnail-wrap">
+					<img width="600" height="350" src="https://www.lxlinux.net/wp-content/uploads/2021/11/webp_1-600x350.jpg" class="attachment-iux_featured_large_thumb2 size-iux_featured_large_thumb2 wp-post-image" alt="" />				</div><!-- .thumbnail-wrap -->
+			</a>
+		
+		<div class="entry-header clear">			
+			<h2 class="entry-title"><a target="_blank" href="https://www.lxlinux.net/6505.html">Python程序员必备资源</a></h2>
+		</div><!-- .entry-header -->
+		<div class="gradient"></div>
+	</li><!-- .featured-slide .hentry -->
+
+		
+
+	<li class="featured-slide hentry">
+
+					<a class="thumbnail-link" href="https://www.lxlinux.net/6501.html">
+				<div class="thumbnail-wrap">
+					<img width="600" height="350" src="https://www.lxlinux.net/wp-content/uploads/2021/11/LinuxFu-600x350.jpg" class="attachment-iux_featured_large_thumb2 size-iux_featured_large_thumb2 wp-post-image" alt="" />				</div><!-- .thumbnail-wrap -->
+			</a>
+		
+		<div class="entry-header clear">			
+			<h2 class="entry-title"><a target="_blank" href="https://www.lxlinux.net/6501.html">Linux程序员必备资源</a></h2>
+		</div><!-- .entry-header -->
+		<div class="gradient"></div>
+	</li><!-- .featured-slide .hentry -->
+
+	
+	</ul><!-- .bxslider -->
+			<div class="ribbon"><span>良许推荐</span></div>
+		
+</div><!-- #featured-slider -->
+
+
+	
+
+<div id="featured-grid">
+
+	<ul class="clear">	
+
+		
+
+	<li class="featured-post hentry">
+
+		<a target="_blank" class="thumbnail-link" href="https://www.lxlinux.net/6500.html">
+			
+			<div class="thumbnail-wrap">
+				<img width="380" height="220" src="https://www.lxlinux.net/wp-content/uploads/2021/11/ST-java1_1x-3_0-380x220.png" class="attachment-iux_featured_small_thumb2 size-iux_featured_small_thumb2 wp-post-image" alt="" />			</div><!-- .thumbnail-wrap -->
+		</a>
+
+		<div class="entry-header">			
+			<h2 class="entry-title"><a target="_blank" href="https://www.lxlinux.net/6500.html">Java程序员必备资源</a></h2>	
+		</div><!-- .entry-header -->
+		<div class="gradient"></div>
+	</li><!-- .featured-slide .hentry -->
+
+		
+
+	<li class="featured-post hentry">
+
+		<a target="_blank" class="thumbnail-link" href="https://www.lxlinux.net/6496.html">
+			
+			<div class="thumbnail-wrap">
+				<img width="380" height="220" src="https://www.lxlinux.net/wp-content/uploads/2021/11/6038586442907648-380x220.png" class="attachment-iux_featured_small_thumb2 size-iux_featured_small_thumb2 wp-post-image" alt="" />			</div><!-- .thumbnail-wrap -->
+		</a>
+
+		<div class="entry-header">			
+			<h2 class="entry-title"><a target="_blank" href="https://www.lxlinux.net/6496.html">C/C++程序员必备资源</a></h2>	
+		</div><!-- .entry-header -->
+		<div class="gradient"></div>
+	</li><!-- .featured-slide .hentry -->
+
+		
+
+	<li class="featured-post hentry">
+
+		<a target="_blank" class="thumbnail-link" href="https://www.lxlinux.net/6500-1.html">
+			
+			<div class="thumbnail-wrap">
+				<img width="380" height="220" src="https://www.lxlinux.net/wp-content/uploads/2021/04/LeetCode_Sharing-380x220.png" class="attachment-iux_featured_small_thumb2 size-iux_featured_small_thumb2 wp-post-image" alt="" />			</div><!-- .thumbnail-wrap -->
+		</a>
+
+		<div class="entry-header">			
+			<h2 class="entry-title"><a target="_blank" href="https://www.lxlinux.net/6500-1.html">LeetCode算法刷题神器，看完 BAT 随你挑！</a></h2>	
+		</div><!-- .entry-header -->
+		<div class="gradient"></div>
+	</li><!-- .featured-slide .hentry -->
+
+	
+	</ul><!-- .featured-grid -->
+		
+</div><!-- #featured-grid -->
+
+
+
+		<div class="clear"></div>
+
+				<div class="home-zhuanti-section">
+			
+			<div class="zhuanti-heading clear">
+				<div class="custom-wrap clear">
+					<h2>教程列表</h2>
+					<div class="desc">
+						Linux入门教程、Linux进阶教程等					</div>
+					<div class="section-more">
+						<a target="_blank" href="https://www.lxlinux.net/zhuanti-full">查看所有教程 <i class="fa fa-angle-right"></i></a>
+					</div>
+				</div>
+			</div>
+
+			<div class="home-zhuanti-list clear">
+			<div class="zhuanti-list-item ht_custom_grid_1_4"><a target="_blank" class="thumbnail-link" href=https://www.lxlinux.net/category/centos-tutorial><div class="thumbnail-wrap"><img src="https://www.lxlinux.net/wp-content/themes/iux/thumb.php?src=http://lxlinux.net/wp-content/uploads/2020/10/WisdomvsKnowledge_1000x700_jpg_OHVUvmTo-1-150x150.jpg&w=600&h=380" alt="CentOS教程"/></div></a><h3 class="zhuanti-title"><a target="_blank" href=https://www.lxlinux.net/category/centos-tutorial>CentOS教程</a></h3></div><div class="zhuanti-list-item ht_custom_grid_1_4"><a target="_blank" class="thumbnail-link" href=https://www.lxlinux.net/category/git-tutorial><div class="thumbnail-wrap"><img src="https://www.lxlinux.net/wp-content/themes/iux/thumb.php?src=http://lxlinux.net/wp-content/uploads/2020/10/FRrWEO-2-150x150.png&w=600&h=380" alt="Git教程"/></div></a><h3 class="zhuanti-title"><a target="_blank" href=https://www.lxlinux.net/category/git-tutorial>Git教程</a></h3></div><div class="zhuanti-list-item ht_custom_grid_1_4"><a target="_blank" class="thumbnail-link" href=https://www.lxlinux.net/category/linux-commands><div class="thumbnail-wrap"><img src="https://www.lxlinux.net/wp-content/themes/iux/thumb.php?src=http://www.lxlinux.net/wp-content/uploads/2020/11/1_Ullu_mWCoAnGtO3slfgxXw-scaled.jpeg&w=600&h=380" alt="Linux命令大全"/></div></a><h3 class="zhuanti-title"><a target="_blank" href=https://www.lxlinux.net/category/linux-commands>Linux命令大全</a></h3></div><div class="zhuanti-list-item ht_custom_grid_1_4"><a target="_blank" class="thumbnail-link" href=https://www.lxlinux.net/category/linux-tutorial><div class="thumbnail-wrap"><img src="https://www.lxlinux.net/wp-content/themes/iux/thumb.php?src=http://lxlinux.net/wp-content/uploads/2020/10/Linux-Tux-150x150.png&w=600&h=380" alt="Linux教程"/></div></a><h3 class="zhuanti-title"><a target="_blank" href=https://www.lxlinux.net/category/linux-tutorial>Linux教程</a></h3></div>			</div><!-- .home-zhuanti-list -->
+
+		</div>
+
+		
+		
+		<main id="main" class="site-main clear">
+
+				<div class="recent-heading">
+					<h2 class="section-title">
+						<span class="title">最新文章</span> 
+					</h2>
+					<div class="posts-nav-menu">
+					<div class="menu-posts-container"><ul id="posts-menu" class="posts-menu"><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-781"><a href="https://www.lxlinux.net/zhuanti-full">教程列表</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1032"><a href="https://www.lxlinux.net/tags">热门标签</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-779"><a target="_blank" rel="noopener noreferrer" href="https://www.lxlinux.net/posts-by-cat">按目录分类</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-780"><a target="_blank" rel="noopener noreferrer" href="https://www.lxlinux.net/posts-100">最新100篇</a></li>
+</ul></div>					</div>				
+				</div>
+
+			<div id="recent-content" class="content-list">
+
+				<div class="posts-loop clear">
+<div id="post-14949" class="clear post-14949 post type-post status-publish format-standard hentry category-knowledge-collection tag-commands tag-skills">	
+
+	
+					<a target="_blank" class="thumbnail-link" href="https://www.lxlinux.net/7071.html"><div class="thumbnail-wrap"><img src="https://www.lxlinux.net/wp-content/themes/iux/thumb.php?src=https://lxlinux.superbed.verylink.top/item/605af2178322e6675cdc60c4.jpg&w=300&h=193" alt="Linux Shell 脚本调试模式使用方法"/></div></a>		
+	
+	<header class="entry-header">
+	
+		<span class="entry-category">
+			<a target="_blank" href="https://www.lxlinux.net/category/knowledge-collection " >干货合集</a> 	
+		</span><!-- .entry-category -->
+
+	
+	<h2 class="entry-title"><a target="_blank" href="https://www.lxlinux.net/7071.html">Linux Shell 脚本调试模式使用方法</a></h2>
+	</header>
+	
+	<div class="entry-overview 	">
+
+		
+		<div class="entry-meta">
+
+		
+						<span class="entry-like">
+					<span class="sl-wrapper"><a href="https://www.lxlinux.net/wp-admin/admin-ajax.php?action=process_simple_like&post_id=14949&nonce=ab3513ec8f&is_comment=0&disabled=true" class="sl-button sl-button-14949" data-nonce="ab3513ec8f" data-post-id="14949" data-iscomment="0" title="点赞这篇文章"><span class="sl-count"><i class="fa fa-thumbs-o-up"></i> 0<em>赞</em></span></a><span class="sl-loader"></span></span>				</span><!-- .entry-like -->
+
+		
+					<span class="entry-views"><a href="https://www.lxlinux.net/7071.html"><i class="flaticon-eye"></i> 5<em>阅读</em></a></span>
+		
+					<span class="entry-comment"><a href="https://www.lxlinux.net/7071.html#respond" class="comments-link" ><i class="flaticon-chat-comment-oval-speech-bubble-with-text-lines"></i> 0<em>评论</em></a></span>
+		
+</div><!-- .entry-meta -->
+		
+			<div class="entry-summary">
+				<p>linux shell的调试模式在实际应用中有很大作用，其启用方式有多种，下面为大家详细讲解一下Linux Shell 脚本调试模式使用方法。</p>
+			</div><!-- .entry-summary -->
+
+					
+	</div><!-- .entry-overview -->
+
+</div><!-- #post-14949 -->
+<div id="post-14947" class="clear post-14947 post type-post status-publish format-standard hentry category-knowledge-collection tag-commands tag-network">	
+
+	
+					<a target="_blank" class="thumbnail-link" href="https://www.lxlinux.net/7070.html"><div class="thumbnail-wrap"><img src="https://www.lxlinux.net/wp-content/themes/iux/thumb.php?src=https://lxlinux.superbed.verylink.top/item/604e16035aedab222c1db535.jpg&w=300&h=193" alt="Linux中常用的网络命令"/></div></a>		
+	
+	<header class="entry-header">
+	
+		<span class="entry-category">
+			<a target="_blank" href="https://www.lxlinux.net/category/knowledge-collection " >干货合集</a> 	
+		</span><!-- .entry-category -->
+
+	
+	<h2 class="entry-title"><a target="_blank" href="https://www.lxlinux.net/7070.html">Linux中常用的网络命令</a></h2>
+	</header>
+	
+	<div class="entry-overview 	">
+
+		
+		<div class="entry-meta">
+
+		
+						<span class="entry-like">
+					<span class="sl-wrapper"><a href="https://www.lxlinux.net/wp-admin/admin-ajax.php?action=process_simple_like&post_id=14947&nonce=ab3513ec8f&is_comment=0&disabled=true" class="sl-button sl-button-14947" data-nonce="ab3513ec8f" data-post-id="14947" data-iscomment="0" title="点赞这篇文章"><span class="sl-count"><i class="fa fa-thumbs-o-up"></i> 0<em>赞</em></span></a><span class="sl-loader"></span></span>				</span><!-- .entry-like -->
+
+		
+					<span class="entry-views"><a href="https://www.lxlinux.net/7070.html"><i class="flaticon-eye"></i> 8<em>阅读</em></a></span>
+		
+					<span class="entry-comment"><a href="https://www.lxlinux.net/7070.html#respond" class="comments-link" ><i class="flaticon-chat-comment-oval-speech-bubble-with-text-lines"></i> 0<em>评论</em></a></span>
+		
+</div><!-- .entry-meta -->
+		
+			<div class="entry-summary">
+				<p>无论你是要下载文件、诊断网络问题、管理网络接口，还是查看网络的统计数据，都有终端命令可以来完成，本篇文章重点为大家讲解一下Linux中常用过的网络命令。</p>
+			</div><!-- .entry-summary -->
+
+					
+	</div><!-- .entry-overview -->
+
+</div><!-- #post-14947 -->
+<div id="post-14945" class="clear post-14945 post type-post status-publish format-standard hentry category-knowledge-collection tag-commands tag-skills">	
+
+	
+					<a target="_blank" class="thumbnail-link" href="https://www.lxlinux.net/7069.html"><div class="thumbnail-wrap"><img src="https://www.lxlinux.net/wp-content/themes/iux/thumb.php?src=https://lxlinux.superbed.verylink.top/item/613ee55c44eaada739dfc427.png&w=300&h=193" alt="详解shell语法检查"/></div></a>		
+	
+	<header class="entry-header">
+	
+		<span class="entry-category">
+			<a target="_blank" href="https://www.lxlinux.net/category/knowledge-collection " >干货合集</a> 	
+		</span><!-- .entry-category -->
+
+	
+	<h2 class="entry-title"><a target="_blank" href="https://www.lxlinux.net/7069.html">详解shell语法检查</a></h2>
+	</header>
+	
+	<div class="entry-overview 	">
+
+		
+		<div class="entry-meta">
+
+		
+						<span class="entry-like">
+					<span class="sl-wrapper"><a href="https://www.lxlinux.net/wp-admin/admin-ajax.php?action=process_simple_like&post_id=14945&nonce=ab3513ec8f&is_comment=0&disabled=true" class="sl-button sl-button-14945" data-nonce="ab3513ec8f" data-post-id="14945" data-iscomment="0" title="点赞这篇文章"><span class="sl-count"><i class="fa fa-thumbs-o-up"></i> 0<em>赞</em></span></a><span class="sl-loader"></span></span>				</span><!-- .entry-like -->
+
+		
+					<span class="entry-views"><a href="https://www.lxlinux.net/7069.html"><i class="flaticon-eye"></i> 6<em>阅读</em></a></span>
+		
+					<span class="entry-comment"><a href="https://www.lxlinux.net/7069.html#respond" class="comments-link" ><i class="flaticon-chat-comment-oval-speech-bubble-with-text-lines"></i> 0<em>评论</em></a></span>
+		
+</div><!-- .entry-meta -->
+		
+			<div class="entry-summary">
+				<p>写过shell脚本的人都知道，即便出现一些简单的语法错误，运行的时候也可能没有办法发现。有些看似运行正确的脚本，实际上可能在某些分支，某些场景下仍然出现错误，而有的写法可能运行正常，但是却不符合POSIX标准，不具备可移植性，本篇文章重点为大家讲解一下shell语法检查具体方法。</p>
+			</div><!-- .entry-summary -->
+
+					
+	</div><!-- .entry-overview -->
+
+</div><!-- #post-14945 -->
+<div id="post-14942" class="clear post-14942 post type-post status-publish format-standard hentry category-knowledge-collection tag-commands tag-skills">	
+
+	
+					<a target="_blank" class="thumbnail-link" href="https://www.lxlinux.net/7068.html"><div class="thumbnail-wrap"><img src="https://www.lxlinux.net/wp-content/themes/iux/thumb.php?src=https://lxlinux.superbed.verylink.top/item/60509c07524f85ce2916527c.jpg&w=300&h=193" alt="Linux系统更新安全补丁具体方法"/></div></a>		
+	
+	<header class="entry-header">
+	
+		<span class="entry-category">
+			<a target="_blank" href="https://www.lxlinux.net/category/knowledge-collection " >干货合集</a> 	
+		</span><!-- .entry-category -->
+
+	
+	<h2 class="entry-title"><a target="_blank" href="https://www.lxlinux.net/7068.html">Linux系统更新安全补丁具体方法</a></h2>
+	</header>
+	
+	<div class="entry-overview 	">
+
+		
+		<div class="entry-meta">
+
+		
+						<span class="entry-like">
+					<span class="sl-wrapper"><a href="https://www.lxlinux.net/wp-admin/admin-ajax.php?action=process_simple_like&post_id=14942&nonce=ab3513ec8f&is_comment=0&disabled=true" class="sl-button sl-button-14942" data-nonce="ab3513ec8f" data-post-id="14942" data-iscomment="0" title="点赞这篇文章"><span class="sl-count"><i class="fa fa-thumbs-o-up"></i> 0<em>赞</em></span></a><span class="sl-loader"></span></span>				</span><!-- .entry-like -->
+
+		
+					<span class="entry-views"><a href="https://www.lxlinux.net/7068.html"><i class="flaticon-eye"></i> 8<em>阅读</em></a></span>
+		
+					<span class="entry-comment"><a href="https://www.lxlinux.net/7068.html#respond" class="comments-link" ><i class="flaticon-chat-comment-oval-speech-bubble-with-text-lines"></i> 0<em>评论</em></a></span>
+		
+</div><!-- .entry-meta -->
+		
+			<div class="entry-summary">
+				<p>在 Linux 系统上，其中一个最重要的需求就是保持定期更新最新的安全补丁，或者为相应的 Linux 版本更新可用的安全补丁。在这篇文章中，我们将分享如何在 CentOS/RHEL 7/6 版本中设置在需要时自动更新重要的安全补丁。和它同一家族的其它 Linux 版本（Fedora 或 Scientific Linux）中可以用类似的方法进行配置。</p>
+			</div><!-- .entry-summary -->
+
+					
+	</div><!-- .entry-overview -->
+
+</div><!-- #post-14942 -->
+<div id="post-14936" class="clear post-14936 post type-post status-publish format-standard hentry category-knowledge-collection tag-commands tag-skills">	
+
+	
+					<a target="_blank" class="thumbnail-link" href="https://www.lxlinux.net/7067.html"><div class="thumbnail-wrap"><img src="https://www.lxlinux.net/wp-content/themes/iux/thumb.php?src=https://lxlinux.superbed.verylink.top/item/61bc55022ab3f51d917623a1.png&w=300&h=193" alt="Linux下 PNG 和 JPG 转换具体方法"/></div></a>		
+	
+	<header class="entry-header">
+	
+		<span class="entry-category">
+			<a target="_blank" href="https://www.lxlinux.net/category/knowledge-collection " >干货合集</a> 	
+		</span><!-- .entry-category -->
+
+	
+	<h2 class="entry-title"><a target="_blank" href="https://www.lxlinux.net/7067.html">Linux下 PNG 和 JPG 转换具体方法</a></h2>
+	</header>
+	
+	<div class="entry-overview 	">
+
+		
+		<div class="entry-meta">
+
+		
+						<span class="entry-like">
+					<span class="sl-wrapper"><a href="https://www.lxlinux.net/wp-admin/admin-ajax.php?action=process_simple_like&post_id=14936&nonce=ab3513ec8f&is_comment=0&disabled=true" class="sl-button sl-button-14936" data-nonce="ab3513ec8f" data-post-id="14936" data-iscomment="0" title="点赞这篇文章"><span class="sl-count"><i class="fa fa-thumbs-o-up"></i> 0<em>赞</em></span></a><span class="sl-loader"></span></span>				</span><!-- .entry-like -->
+
+		
+					<span class="entry-views"><a href="https://www.lxlinux.net/7067.html"><i class="flaticon-eye"></i> 9<em>阅读</em></a></span>
+		
+					<span class="entry-comment"><a href="https://www.lxlinux.net/7067.html#respond" class="comments-link" ><i class="flaticon-chat-comment-oval-speech-bubble-with-text-lines"></i> 0<em>评论</em></a></span>
+		
+</div><!-- .entry-meta -->
+		
+			<div class="entry-summary">
+				<p>计算机术语中，批处理指的是用一个非交互式的程序来执行一序列的任务的方法。这篇教程里，我们会使用 Linux 命令行工具，并提供 4 种简单的处理方式来把一些.PNG格式的图像批量转换成.JPG格式的，以及转换回来。</p>
+			</div><!-- .entry-summary -->
+
+					
+	</div><!-- .entry-overview -->
+
+</div><!-- #post-14936 -->
+<div id="post-14934" class="clear post-14934 post type-post status-publish format-standard hentry category-knowledge-collection tag-commands tag-skills">	
+
+	
+					<a target="_blank" class="thumbnail-link" href="https://www.lxlinux.net/7066.html"><div class="thumbnail-wrap"><img src="https://www.lxlinux.net/wp-content/themes/iux/thumb.php?src=https://lxlinux.superbed.verylink.top/item/61bc540a2ab3f51d91759ec5.png&w=300&h=193" alt="Arch Linux 终端中更改 WiFi 密码具体方法"/></div></a>		
+	
+	<header class="entry-header">
+	
+		<span class="entry-category">
+			<a target="_blank" href="https://www.lxlinux.net/category/knowledge-collection " >干货合集</a> 	
+		</span><!-- .entry-category -->
+
+	
+	<h2 class="entry-title"><a target="_blank" href="https://www.lxlinux.net/7066.html">Arch Linux 终端中更改 WiFi 密码具体方法</a></h2>
+	</header>
+	
+	<div class="entry-overview 	">
+
+		
+		<div class="entry-meta">
+
+		
+						<span class="entry-like">
+					<span class="sl-wrapper"><a href="https://www.lxlinux.net/wp-admin/admin-ajax.php?action=process_simple_like&post_id=14934&nonce=ab3513ec8f&is_comment=0&disabled=true" class="sl-button sl-button-14934" data-nonce="ab3513ec8f" data-post-id="14934" data-iscomment="0" title="点赞这篇文章"><span class="sl-count"><i class="fa fa-thumbs-o-up"></i> 0<em>赞</em></span></a><span class="sl-loader"></span></span>				</span><!-- .entry-like -->
+
+		
+					<span class="entry-views"><a href="https://www.lxlinux.net/7066.html"><i class="flaticon-eye"></i> 7<em>阅读</em></a></span>
+		
+					<span class="entry-comment"><a href="https://www.lxlinux.net/7066.html#respond" class="comments-link" ><i class="flaticon-chat-comment-oval-speech-bubble-with-text-lines"></i> 0<em>评论</em></a></span>
+		
+</div><!-- .entry-meta -->
+		
+			<div class="entry-summary">
+				<p>如果修改了路由器的 WiFi 网络密码后， Arch Linux 测试机不能连接到网络,同时 Arch Linux 测试机没有图形化桌面环境，不得不在终端上更改 WiFi 密码。如何在 Arch Linux 终端上用命令行来更改 WiFi 密码，如果你也面临同样的问题，读完这篇文章吧，这个方法并没有那么难。</p>
+			</div><!-- .entry-summary -->
+
+					
+	</div><!-- .entry-overview -->
+
+</div><!-- #post-14934 -->
+<div id="post-14932" class="clear post-14932 post type-post status-publish format-standard hentry category-knowledge-collection tag-commands tag-skills">	
+
+	
+					<a target="_blank" class="thumbnail-link" href="https://www.lxlinux.net/7065.html"><div class="thumbnail-wrap"><img src="https://www.lxlinux.net/wp-content/themes/iux/thumb.php?src=https://lxlinux.superbed.verylink.top/item/605804968322e6675c507304.jpg&w=300&h=193" alt="Linux下快速清空文件具体方法"/></div></a>		
+	
+	<header class="entry-header">
+	
+		<span class="entry-category">
+			<a target="_blank" href="https://www.lxlinux.net/category/knowledge-collection " >干货合集</a> 	
+		</span><!-- .entry-category -->
+
+	
+	<h2 class="entry-title"><a target="_blank" href="https://www.lxlinux.net/7065.html">Linux下快速清空文件具体方法</a></h2>
+	</header>
+	
+	<div class="entry-overview 	">
+
+		
+		<div class="entry-meta">
+
+		
+						<span class="entry-like">
+					<span class="sl-wrapper"><a href="https://www.lxlinux.net/wp-admin/admin-ajax.php?action=process_simple_like&post_id=14932&nonce=ab3513ec8f&is_comment=0&disabled=true" class="sl-button sl-button-14932" data-nonce="ab3513ec8f" data-post-id="14932" data-iscomment="0" title="点赞这篇文章"><span class="sl-count"><i class="fa fa-thumbs-o-up"></i> 0<em>赞</em></span></a><span class="sl-loader"></span></span>				</span><!-- .entry-like -->
+
+		
+					<span class="entry-views"><a href="https://www.lxlinux.net/7065.html"><i class="flaticon-eye"></i> 7<em>阅读</em></a></span>
+		
+					<span class="entry-comment"><a href="https://www.lxlinux.net/7065.html#respond" class="comments-link" ><i class="flaticon-chat-comment-oval-speech-bubble-with-text-lines"></i> 0<em>评论</em></a></span>
+		
+</div><!-- .entry-meta -->
+		
+			<div class="entry-summary">
+				<p>在 Linux 终端下处理文件时，有时我们想直接清空或删除文件的内容但又不想使用任何Linux命令行编辑器去打开这些文件，下面为大家详细讲解一下Linux下直接清空文件具体方法。</p>
+			</div><!-- .entry-summary -->
+
+					
+	</div><!-- .entry-overview -->
+
+</div><!-- #post-14932 -->
+<div id="post-14929" class="clear post-14929 post type-post status-publish format-standard hentry category-knowledge-collection tag-skills tag-coupe">	
+
+	
+					<a target="_blank" class="thumbnail-link" href="https://www.lxlinux.net/7064.html"><div class="thumbnail-wrap"><img src="https://www.lxlinux.net/wp-content/themes/iux/thumb.php?src=https://lxlinux.superbed.verylink.top/item/61bc52582ab3f51d9174bbc7.jpg&w=300&h=193" alt="被堪称神器的六个网站"/></div></a>		
+	
+	<header class="entry-header">
+	
+		<span class="entry-category">
+			<a target="_blank" href="https://www.lxlinux.net/category/knowledge-collection " >干货合集</a> 	
+		</span><!-- .entry-category -->
+
+	
+	<h2 class="entry-title"><a target="_blank" href="https://www.lxlinux.net/7064.html">被堪称神器的六个网站</a></h2>
+	</header>
+	
+	<div class="entry-overview 	">
+
+		
+		<div class="entry-meta">
+
+		
+						<span class="entry-like">
+					<span class="sl-wrapper"><a href="https://www.lxlinux.net/wp-admin/admin-ajax.php?action=process_simple_like&post_id=14929&nonce=ab3513ec8f&is_comment=0&disabled=true" class="sl-button sl-button-14929" data-nonce="ab3513ec8f" data-post-id="14929" data-iscomment="0" title="点赞这篇文章"><span class="sl-count"><i class="fa fa-thumbs-o-up"></i> 0<em>赞</em></span></a><span class="sl-loader"></span></span>				</span><!-- .entry-like -->
+
+		
+					<span class="entry-views"><a href="https://www.lxlinux.net/7064.html"><i class="flaticon-eye"></i> 10<em>阅读</em></a></span>
+		
+					<span class="entry-comment"><a href="https://www.lxlinux.net/7064.html#respond" class="comments-link" ><i class="flaticon-chat-comment-oval-speech-bubble-with-text-lines"></i> 0<em>评论</em></a></span>
+		
+</div><!-- .entry-meta -->
+		
+			<div class="entry-summary">
+				<p>网站是通往互联网世界的一大工具，在这片信息的海洋上，总有那么几款产品，如海岛般骄傲伫立，带给人不一样的感觉。当然，本文的标题是有失公允的，世界是优秀的产品不计其数，要分类罗列出来简直不够写，所以本文所列举的网站仅作个人意见，方便阅读。</p>
+			</div><!-- .entry-summary -->
+
+					
+	</div><!-- .entry-overview -->
+
+</div><!-- #post-14929 -->
+<div id="post-14927" class="clear post-14927 post type-post status-publish format-standard hentry category-knowledge-collection tag-commands tag-skills">	
+
+	
+					<a target="_blank" class="thumbnail-link" href="https://www.lxlinux.net/7063.html"><div class="thumbnail-wrap"><img src="https://www.lxlinux.net/wp-content/themes/iux/thumb.php?src=https://lxlinux.superbed.verylink.top/item/61bc51bc2ab3f51d9173d9f3.png&w=300&h=193" alt="Linux下使用Aria2提高下载速度"/></div></a>		
+	
+	<header class="entry-header">
+	
+		<span class="entry-category">
+			<a target="_blank" href="https://www.lxlinux.net/category/knowledge-collection " >干货合集</a> 	
+		</span><!-- .entry-category -->
+
+	
+	<h2 class="entry-title"><a target="_blank" href="https://www.lxlinux.net/7063.html">Linux下使用Aria2提高下载速度</a></h2>
+	</header>
+	
+	<div class="entry-overview 	">
+
+		
+		<div class="entry-meta">
+
+		
+						<span class="entry-like">
+					<span class="sl-wrapper"><a href="https://www.lxlinux.net/wp-admin/admin-ajax.php?action=process_simple_like&post_id=14927&nonce=ab3513ec8f&is_comment=0&disabled=true" class="sl-button sl-button-14927" data-nonce="ab3513ec8f" data-post-id="14927" data-iscomment="0" title="点赞这篇文章"><span class="sl-count"><i class="fa fa-thumbs-o-up"></i> 0<em>赞</em></span></a><span class="sl-loader"></span></span>				</span><!-- .entry-like -->
+
+		
+					<span class="entry-views"><a href="https://www.lxlinux.net/7063.html"><i class="flaticon-eye"></i> 8<em>阅读</em></a></span>
+		
+					<span class="entry-comment"><a href="https://www.lxlinux.net/7063.html#respond" class="comments-link" ><i class="flaticon-chat-comment-oval-speech-bubble-with-text-lines"></i> 0<em>评论</em></a></span>
+		
+</div><!-- .entry-meta -->
+		
+			<div class="entry-summary">
+				<p>Aria2 是一个多平台轻量级，支持 HTTP、FTP、BitTorrent 等多协议、多来源的命令行下载工具。Aria2 可以从多个来源、多个协议下载资源，最大的程度上利用了你的带宽。</p>
+			</div><!-- .entry-summary -->
+
+					
+	</div><!-- .entry-overview -->
+
+</div><!-- #post-14927 -->
+<div id="post-14925" class="clear last post-14925 post type-post status-publish format-standard hentry category-knowledge-collection tag-commands tag-skills">	
+
+	
+					<a target="_blank" class="thumbnail-link" href="https://www.lxlinux.net/7062.html"><div class="thumbnail-wrap"><img src="https://www.lxlinux.net/wp-content/themes/iux/thumb.php?src=https://lxlinux.superbed.verylink.top/item/6056eb7c524f85ce2951ac72.jpg&w=300&h=193" alt="Linux中从 ISO 镜像 提取和复制文件"/></div></a>		
+	
+	<header class="entry-header">
+	
+		<span class="entry-category">
+			<a target="_blank" href="https://www.lxlinux.net/category/knowledge-collection " >干货合集</a> 	
+		</span><!-- .entry-category -->
+
+	
+	<h2 class="entry-title"><a target="_blank" href="https://www.lxlinux.net/7062.html">Linux中从 ISO 镜像 提取和复制文件</a></h2>
+	</header>
+	
+	<div class="entry-overview 	">
+
+		
+		<div class="entry-meta">
+
+		
+						<span class="entry-like">
+					<span class="sl-wrapper"><a href="https://www.lxlinux.net/wp-admin/admin-ajax.php?action=process_simple_like&post_id=14925&nonce=ab3513ec8f&is_comment=0&disabled=true" class="sl-button sl-button-14925" data-nonce="ab3513ec8f" data-post-id="14925" data-iscomment="0" title="点赞这篇文章"><span class="sl-count"><i class="fa fa-thumbs-o-up"></i> 0<em>赞</em></span></a><span class="sl-loader"></span></span>				</span><!-- .entry-like -->
+
+		
+					<span class="entry-views"><a href="https://www.lxlinux.net/7062.html"><i class="flaticon-eye"></i> 7<em>阅读</em></a></span>
+		
+					<span class="entry-comment"><a href="https://www.lxlinux.net/7062.html#respond" class="comments-link" ><i class="flaticon-chat-comment-oval-speech-bubble-with-text-lines"></i> 0<em>评论</em></a></span>
+		
+</div><!-- .entry-meta -->
+		
+			<div class="entry-summary">
+				<p>假设你的 Linux 服务器上有一个超大的 ISO 镜像文件，你想要打开它，然后提取或者复制其中的一个文件。你会怎么做呢？其实在 Linux 系统里，有很多方法来实现这个要求。</p>
+			</div><!-- .entry-summary -->
+
+					
+	</div><!-- .entry-overview -->
+
+</div><!-- #post-14925 --></div><!-- .post-loop -->
+			</div><!-- #recent-content -->		
+
+		</main><!-- .site-main -->
+
+		
+
+	<nav class="navigation pagination" role="navigation" aria-label="文章">
+		<h2 class="screen-reader-text">文章导航</h2>
+		<div class="nav-links"><span aria-current="page" class="page-numbers current">1</span>
+<a class="page-numbers" href="https://www.lxlinux.net/page/2">2</a>
+<span class="page-numbers dots">&hellip;</span>
+<a class="page-numbers" href="https://www.lxlinux.net/page/612">612</a>
+<a class="next page-numbers" href="https://www.lxlinux.net/page/2">下一页</a></div>
+	</nav>
+
+				
+	</div><!-- #primary -->
+
+
+<aside id="secondary" class="widget-area sidebar">
+	<div class="sidebar__inner">
+		<div id="search-2" class="widget widget_search"><form id="searchform" method="get" action="https://www.lxlinux.net/">
+	<input type="search" name="s" class="search-input" placeholder="请输入关键词" autocomplete="off">
+	<button type="submit" class="search-submit">搜索</button>		
+</form></div><div id="custom_html-3" class="widget_text widget widget_custom_html"><div class="textwidget custom-html-widget"><div style="">
+    <div style="float: left; width: 112px; height: 112px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="/wp-content/uploads/2020/10/公众号二维码（迁移后）.jpg"/>
+    </div>
+    <div style="float: left; margin-left: 25px;">
+        <div style="font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注良许公众号</div>
+        <small style="font-size: 0.8em;">
+            →「技术干货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="/wp-content/uploads/2020/10/企业微信美化版（自动通过添加）.png" target="_blank" style="color:orange;font-size: 14px;" rel="noopener noreferrer">点击添加良许微信，加入技术交流群</a>
+    <br>
+    <div style="height: 8px;"></div>
+    除公众号以外，良许还会在以下平台发布内容：
+</div>
+<hr>
+
+<div>
+    <table style="width: 100%;text-align: center;">
+        <tr>
+            <td style="border-width: 0; padding: 0;">
+                <a href="https://www.zhihu.com/people/yychuyu" target="_blank" title="知乎" rel="noopener noreferrer">
+                    <img style="width: 22px;" src="/wp-content/uploads/2020/10/知乎-2.png"/>
+                </a>
+            </td>
+            <td style="border-width: 0; padding: 0;">
+                <a href="https://weibo.com/coderliangxu/home" target="_blank" title="微博" rel="noopener noreferrer">
+                    <img style="width: 22px;" src="/wp-content/uploads/2020/10/微博.png"/>
+                </a>
+            </td>
+            <td style="border-width: 0; padding: 0;">
+                <a href="https://github.com/coderliangxu" target="_blank" title="GitHub" rel="noopener noreferrer">
+                    <img style="width: 22px;height: 22px;" src="/wp-content/uploads/2020/10/github.png"/>
+                </a>
+            </td>
+            <td style="border-width: 0; padding: 0;">
+                <a href="https://blog.csdn.net/yychuyu" target="_blank" title="CSDN" rel="noopener noreferrer">
+                    <img style="width: 18px;" src="/wp-content/uploads/2020/10/CSDN.png"/>
+                </a>
+            </td>      
+            <td style="border-width: 0; padding: 0;">
+                <a href="https://space.bilibili.com/487923491" target="_blank" title="bilibili" rel="noopener noreferrer">
+                    <img style="width: 22px;" src="/wp-content/uploads/2020/10/B站.png"/>
+                </a>
+            </td>
+            
+        </tr>
+    </table>
+</div></div></div><div id="custom_html-8" class="widget_text widget widget_custom_html"><div class="textwidget custom-html-widget"><a href="https://www.lxlinux.net/category/resources" target="_blank" rel="noopener noreferrer">本站所有资源汇集在这里：</a><br>
+<a href="https://www.lxlinux.net/6526.html" target="_blank" rel="noopener noreferrer">必备书单</a> | 
+<a href="https://www.lxlinux.net/6500-1.html" target="_blank" rel="noopener noreferrer">4份算法资料</a> <br>
+<a href="https://www.lxlinux.net/6501.html" target="_blank" rel="noopener noreferrer">Linux</a> | 
+<a href="https://www.lxlinux.net/6500.html" target="_blank" rel="noopener noreferrer">Java</a> | 
+<a href="https://www.lxlinux.net/6505.html" target="_blank" rel="noopener noreferrer">Python</a> | 
+<a href="https://www.lxlinux.net/6496.html" target="_blank" rel="noopener noreferrer">C/C++</a> | 
+<a href="https://www.lxlinux.net/6495.html" target="_blank" rel="noopener noreferrer">C#</a> | 
+<a href="https://www.lxlinux.net/6498.html" target="_blank" rel="noopener noreferrer">Go</a> | 
+<a href="https://www.lxlinux.net/6503.html" target="_blank" rel="noopener noreferrer">PHP</a><br>
+<a href="https://www.lxlinux.net/6508.html" target="_blank" rel="noopener noreferrer">安卓</a> | 
+<a href="https://www.lxlinux.net/6499.html" target="_blank" rel="noopener noreferrer">iOS</a> | 
+<a href="https://www.lxlinux.net/6516.html" target="_blank" rel="noopener noreferrer">前端</a> | 
+<a href="https://www.lxlinux.net/6517.html" target="_blank" rel="noopener noreferrer">AI</a> | 
+<a href="https://www.lxlinux.net/6510.html" target="_blank" rel="noopener noreferrer">大数据</a> | 
+<a href="https://www.lxlinux.net/6523.html" target="_blank" rel="noopener noreferrer">小程序</a> | 
+<a href="https://www.lxlinux.net/6511.html" target="_blank" rel="noopener noreferrer">单片机</a><br>
+<a href="https://www.lxlinux.net/6506.html" target="_blank" rel="noopener noreferrer">QT</a> | 
+<a href="https://www.lxlinux.net/6502.html" target="_blank" rel="noopener noreferrer">Matlab</a> | 
+<a href="https://www.lxlinux.net/6522.html" target="_blank" rel="noopener noreferrer">算法</a> | 
+<a href="https://www.lxlinux.net/6521.html" target="_blank" rel="noopener noreferrer">数据库</a> | 
+<a href="https://www.lxlinux.net/6524.html" target="_blank" rel="noopener noreferrer">易语言</a> | 
+<a href="https://www.lxlinux.net/6507.html" target="_blank" rel="noopener noreferrer">UI</a> | 
+<a href="https://www.lxlinux.net/6519.html" target="_blank" rel="noopener noreferrer">测试</a><br>
+<a href="https://www.lxlinux.net/6497.html" target="_blank" rel="noopener noreferrer">Git/SVN</a> | 
+<a href="https://www.lxlinux.net/6518.html" target="_blank" rel="noopener noreferrer">软件</a> | 
+<a href="https://www.lxlinux.net/6520.html" target="_blank" rel="noopener noreferrer">软件教程</a> | 
+<a href="https://www.lxlinux.net/6504.html" target="_blank" rel="noopener noreferrer">PPT</a><br>
+<a href="https://www.lxlinux.net/6514.html" target="_blank" rel="noopener noreferrer">简历</a> | 
+<a href="https://www.lxlinux.net/6509.html" target="_blank" rel="noopener noreferrer">毕设</a> | 
+<a href="https://www.lxlinux.net/6512.html" target="_blank" rel="noopener noreferrer">电子书</a> | 
+<a href="https://www.lxlinux.net/6513.html" target="_blank" rel="noopener noreferrer">公开课</a> | 
+<a href="https://www.lxlinux.net/6525.html" target="_blank" rel="noopener noreferrer">英语</a> | 
+<a href="https://www.lxlinux.net/6515.html" target="_blank" rel="noopener noreferrer">其它</a>
+
+
+
+
+
+
+
+
+
+</div></div><div id="iux-views-1" class="widget widget-iux-views widget_posts_thumbnail"><h2 class="widget-title">热门文章</h2><ul><li class="clear"><a target="_blank" class="thumbnail-link" href="https://www.lxlinux.net/1959.html"><div class="thumbnail-wrap"><img src="https://www.lxlinux.net/wp-content/themes/iux/thumb.php?src=https://lxlinux.superbed.verylink.top/item/6056f390524f85ce29563828.jpg&w=150&h=90" alt="Linux系统diff命令详解"/></div></a><div class="entry-wrap"><a href="https://www.lxlinux.net/1959.html" rel="bookmark">Linux系统diff命令详解</a><div class="entry-meta">2021年5月4日</div></div></li><li class="clear"><a target="_blank" class="thumbnail-link" href="https://www.lxlinux.net/97.html"><div class="thumbnail-wrap"><img src="https://www.lxlinux.net/wp-content/themes/iux/thumb.php?src=https://pic.downk.cc/item/5ff2bc9d3ffa7d37b3fe338b.jpg&w=150&h=90" alt="在 Linux 命令行里与其他用户通信"/></div></a><div class="entry-wrap"><a href="https://www.lxlinux.net/97.html" rel="bookmark">在 Linux 命令行里与其他用户通信</a><div class="entry-meta">2021年1月4日</div></div></li><li class="clear"><a target="_blank" class="thumbnail-link" href="https://www.lxlinux.net/96.html"><div class="thumbnail-wrap"><img src="https://www.lxlinux.net/wp-content/themes/iux/thumb.php?src=https://pic.downk.cc/item/5ff2bbc13ffa7d37b3fdcfac.jpg&w=150&h=90" alt="MYSQL 入门全套"/></div></a><div class="entry-wrap"><a href="https://www.lxlinux.net/96.html" rel="bookmark">MYSQL 入门全套</a><div class="entry-meta">2021年1月4日</div></div></li><li class="clear"><a target="_blank" class="thumbnail-link" href="https://www.lxlinux.net/1859.html"><div class="thumbnail-wrap"><img src="https://www.lxlinux.net/wp-content/themes/iux/thumb.php?src=https://www.lxlinux.net/wp-content/uploads/2020/10/pexels-bongkarn-thanyakij-3740884-300x149.jpg&w=150&h=90" alt="Linux系统创建文件命令"/></div></a><div class="entry-wrap"><a href="https://www.lxlinux.net/1859.html" rel="bookmark">Linux系统创建文件命令</a><div class="entry-meta">2021年4月27日</div></div></li><li class="clear"><a target="_blank" class="thumbnail-link" href="https://www.lxlinux.net/1153.html"><div class="thumbnail-wrap"><img src="https://www.lxlinux.net/wp-content/themes/iux/thumb.php?src=https://www.lxlinux.net/wp-content/uploads/2020/11/nesa-by-makers-752736-unsplash-678x381-1-300x169.jpg&w=150&h=90" alt="Linux系统安装pip详细教程"/></div></a><div class="entry-wrap"><a href="https://www.lxlinux.net/1153.html" rel="bookmark">Linux系统安装pip详细教程</a><div class="entry-meta">2021年3月20日</div></div></li></ul></div>		<div id="recent-posts-2" class="widget widget_recent_entries">		<h2 class="widget-title">近期文章</h2>		<ul>
+											<li>
+					<a href="https://www.lxlinux.net/7071.html">Linux Shell 脚本调试模式使用方法</a>
+											<span class="post-date">2021年12月17日</span>
+									</li>
+											<li>
+					<a href="https://www.lxlinux.net/7070.html">Linux中常用的网络命令</a>
+											<span class="post-date">2021年12月17日</span>
+									</li>
+											<li>
+					<a href="https://www.lxlinux.net/7069.html">详解shell语法检查</a>
+											<span class="post-date">2021年12月17日</span>
+									</li>
+											<li>
+					<a href="https://www.lxlinux.net/7068.html">Linux系统更新安全补丁具体方法</a>
+											<span class="post-date">2021年12月17日</span>
+									</li>
+											<li>
+					<a href="https://www.lxlinux.net/7067.html">Linux下 PNG 和 JPG 转换具体方法</a>
+											<span class="post-date">2021年12月17日</span>
+									</li>
+					</ul>
+		</div><div id="recent-comments-2" class="widget widget_recent_comments"><h2 class="widget-title">近期评论</h2><ul id="recentcomments"><li class="recentcomments"><span class="comment-author-link">迹忆客</span>发表在《<a href="https://www.lxlinux.net/6628.html#comment-47">详解Linux Signal机制</a>》</li><li class="recentcomments"><span class="comment-author-link">良许</span>发表在《<a href="https://www.lxlinux.net/1246.html#comment-46">Linux系统安装TcpDump详细步骤</a>》</li><li class="recentcomments"><span class="comment-author-link">短暂</span>发表在《<a href="https://www.lxlinux.net/1246.html#comment-44">Linux系统安装TcpDump详细步骤</a>》</li><li class="recentcomments"><span class="comment-author-link">熊亚男</span>发表在《<a href="https://www.lxlinux.net/linux%e7%b3%bb%e7%bb%9f%e5%ae%89%e8%a3%85-%e8%99%9a%e6%8b%9f%e6%9c%bacentos%e5%ae%89%e8%a3%85%e6%95%99%e7%a8%8b.html#comment-38">Linux系统安装-虚拟机CentOS安装教程</a>》</li><li class="recentcomments"><span class="comment-author-link"><a href='https://www.lxlinux.net' rel='external nofollow ugc' class='url'>良许</a></span>发表在《<a href="https://www.lxlinux.net/10-ways-to-check-compressed-files-on-linux-terminal.html#comment-36">Linux系统命令行下查看压缩文件的10种方法</a>》</li></ul></div><div id="categories-2" class="widget widget_categories"><h2 class="widget-title">分类目录</h2><form action="https://www.lxlinux.net" method="get"><label class="screen-reader-text" for="cat">分类目录</label><select  name='cat' id='cat' class='postform' >
+	<option value='-1'>选择分类目录</option>
+	<option class="level-0" value="82">CentOS教程&nbsp;&nbsp;(11)</option>
+	<option class="level-0" value="75">Git教程&nbsp;&nbsp;(9)</option>
+	<option class="level-0" value="79">Linux命令大全&nbsp;&nbsp;(853)</option>
+	<option class="level-0" value="73">Linux教程&nbsp;&nbsp;(251)</option>
+	<option class="level-0" value="78">Shell教程&nbsp;&nbsp;(19)</option>
+	<option class="level-0" value="80">Ubuntu教程&nbsp;&nbsp;(3)</option>
+	<option class="level-0" value="49">干货合集&nbsp;&nbsp;(4,964)</option>
+	<option class="level-0" value="92">文章归档&nbsp;&nbsp;(3)</option>
+	<option class="level-0" value="1">未分类&nbsp;&nbsp;(27)</option>
+	<option class="level-0" value="50">码农工具教程&nbsp;&nbsp;(1)</option>
+	<option class="level-0" value="97">程序员必备资源&nbsp;&nbsp;(34)</option>
+</select>
+</form>
+<script type="text/javascript">
+/* <![CDATA[ */
+(function() {
+	var dropdown = document.getElementById( "cat" );
+	function onCatChange() {
+		if ( dropdown.options[ dropdown.selectedIndex ].value > 0 ) {
+			dropdown.parentNode.submit();
+		}
+	}
+	dropdown.onchange = onCatChange;
+})();
+/* ]]> */
+</script>
+
+			</div><div id="archives-2" class="widget widget_archive"><h2 class="widget-title">文章归档</h2>		<label class="screen-reader-text" for="archives-dropdown-2">文章归档</label>
+		<select id="archives-dropdown-2" name="archive-dropdown">
+			
+			<option value="">选择月份</option>
+				<option value='https://www.lxlinux.net/2021/12'> 2021年12月 &nbsp;(313)</option>
+	<option value='https://www.lxlinux.net/2021/11'> 2021年11月 &nbsp;(578)</option>
+	<option value='https://www.lxlinux.net/2021/10'> 2021年10月 &nbsp;(543)</option>
+	<option value='https://www.lxlinux.net/2021/09'> 2021年9月 &nbsp;(547)</option>
+	<option value='https://www.lxlinux.net/2021/08'> 2021年8月 &nbsp;(576)</option>
+	<option value='https://www.lxlinux.net/2021/07'> 2021年7月 &nbsp;(540)</option>
+	<option value='https://www.lxlinux.net/2021/06'> 2021年6月 &nbsp;(526)</option>
+	<option value='https://www.lxlinux.net/2021/05'> 2021年5月 &nbsp;(528)</option>
+	<option value='https://www.lxlinux.net/2021/04'> 2021年4月 &nbsp;(551)</option>
+	<option value='https://www.lxlinux.net/2021/03'> 2021年3月 &nbsp;(599)</option>
+	<option value='https://www.lxlinux.net/2021/02'> 2021年2月 &nbsp;(444)</option>
+	<option value='https://www.lxlinux.net/2021/01'> 2021年1月 &nbsp;(238)</option>
+	<option value='https://www.lxlinux.net/2020/12'> 2020年12月 &nbsp;(100)</option>
+	<option value='https://www.lxlinux.net/2020/11'> 2020年11月 &nbsp;(42)</option>
+
+		</select>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+(function() {
+	var dropdown = document.getElementById( "archives-dropdown-2" );
+	function onSelectChange() {
+		if ( dropdown.options[ dropdown.selectedIndex ].value !== '' ) {
+			document.location.href = this.options[ this.selectedIndex ].value;
+		}
+	}
+	dropdown.onchange = onSelectChange;
+})();
+/* ]]> */
+</script>
+
+		</div><div id="tag_cloud-2" class="widget widget_tag_cloud"><h2 class="widget-title">标签</h2><div class="tagcloud"><a href="https://www.lxlinux.net/tag/git" class="tag-cloud-link tag-link-57 tag-link-position-1" style="font-size: 10.688741721854pt;" aria-label="Git (18个项目)">Git</a>
+<a href="https://www.lxlinux.net/tag/github" class="tag-cloud-link tag-link-58 tag-link-position-2" style="font-size: 8pt;" aria-label="GitHub (4个项目)">GitHub</a>
+<a href="https://www.lxlinux.net/tag/svn" class="tag-cloud-link tag-link-59 tag-link-position-3" style="font-size: 8.9271523178808pt;" aria-label="SVN (7个项目)">SVN</a>
+<a href="https://www.lxlinux.net/tag/vim" class="tag-cloud-link tag-link-53 tag-link-position-4" style="font-size: 9.9006622516556pt;" aria-label="Vim (12个项目)">Vim</a>
+<a href="https://www.lxlinux.net/tag/kernel" class="tag-cloud-link tag-link-85 tag-link-position-5" style="font-size: 11.847682119205pt;" aria-label="内核 (33个项目)">内核</a>
+<a href="https://www.lxlinux.net/tag/encoding-decoding" class="tag-cloud-link tag-link-88 tag-link-position-6" style="font-size: 8pt;" aria-label="加解密 (4个项目)">加解密</a>
+<a href="https://www.lxlinux.net/tag/commands" class="tag-cloud-link tag-link-55 tag-link-position-7" style="font-size: 22pt;" aria-label="命令 (5,240个项目)">命令</a>
+<a href="https://www.lxlinux.net/tag/big-data" class="tag-cloud-link tag-link-96 tag-link-position-8" style="font-size: 11.245033112583pt;" aria-label="大数据 (24个项目)">大数据</a>
+<a href="https://www.lxlinux.net/tag/archives" class="tag-cloud-link tag-link-93 tag-link-position-9" style="font-size: 9.5761589403974pt;" aria-label="归档 (10个项目)">归档</a>
+<a href="https://www.lxlinux.net/tag/skills" class="tag-cloud-link tag-link-87 tag-link-position-10" style="font-size: 22pt;" aria-label="技巧 (5,302个项目)">技巧</a>
+<a href="https://www.lxlinux.net/tag/database" class="tag-cloud-link tag-link-91 tag-link-position-11" style="font-size: 12.58940397351pt;" aria-label="数据库 (48个项目)">数据库</a>
+<a href="https://www.lxlinux.net/tag/linux_server" class="tag-cloud-link tag-link-90 tag-link-position-12" style="font-size: 15pt;" aria-label="服务器 (162个项目)">服务器</a>
+<a href="https://www.lxlinux.net/tag/supertools" class="tag-cloud-link tag-link-65 tag-link-position-13" style="font-size: 14.53642384106pt;" aria-label="神器 (127个项目)">神器</a>
+<a href="https://www.lxlinux.net/tag/coupe" class="tag-cloud-link tag-link-94 tag-link-position-14" style="font-size: 14.76821192053pt;" aria-label="科普 (144个项目)">科普</a>
+<a href="https://www.lxlinux.net/tag/network" class="tag-cloud-link tag-link-95 tag-link-position-15" style="font-size: 14.675496688742pt;" aria-label="网络 (137个项目)">网络</a>
+<a href="https://www.lxlinux.net/tag/self-learning" class="tag-cloud-link tag-link-89 tag-link-position-16" style="font-size: 8pt;" aria-label="自学 (4个项目)">自学</a>
+<a href="https://www.lxlinux.net/tag/ops" class="tag-cloud-link tag-link-86 tag-link-position-17" style="font-size: 19.12582781457pt;" aria-label="运维 (1,255个项目)">运维</a></div>
+</div>	</div><!-- .sidebar__inner -->
+</aside><!-- #secondary -->
+
+	</div><!-- #content .site-content -->
+
+	<footer id="colophon" class="site-footer clear">
+
+		<div class="clear"></div>
+
+				
+			
+
+		<div class="container">
+
+		<div class="footer-content">
+
+			
+				<div class="footer-partners clear">
+					<div class="partner-title clear">
+						<strong>其它平台</strong>
+						<span class="partner-desc">良许也在这些平台更新内容</span>
+						<span class="partner-link">
+															<a href="https://www.lxlinux.net" target="_blank">
+																														
+								</a>
+														
+						</span>
+					</div>
+					<div class="partner-wrap">
+						<div id="media_image-19" class="partner-image widget_media_image"><a href="/wp-content/uploads/2020/10/公众号二维码（迁移后）.jpg"><img width="300" height="90" src="https://www.lxlinux.net/wp-content/uploads/2020/10/Snipaste_2020-10-24_10-29-08-300x90.png" class="image wp-image-1000  attachment-medium size-medium" alt="" style="max-width: 100%; height: auto;" srcset="https://www.lxlinux.net/wp-content/uploads/2020/10/Snipaste_2020-10-24_10-29-08-300x90.png 300w, https://www.lxlinux.net/wp-content/uploads/2020/10/Snipaste_2020-10-24_10-29-08.png 592w" sizes="(max-width: 300px) 100vw, 300px" /></a></div><div id="media_image-16" class="partner-image widget_media_image"><a href="https://www.zhihu.com/people/yychuyu"><img width="1018" height="390" src="https://www.lxlinux.net/wp-content/uploads/2020/10/0edac371-5cbf-4fce-82a8-be5ce5cd83a8.png" class="image wp-image-1006  attachment-full size-full" alt="" style="max-width: 100%; height: auto;" srcset="https://www.lxlinux.net/wp-content/uploads/2020/10/0edac371-5cbf-4fce-82a8-be5ce5cd83a8.png 1018w, https://www.lxlinux.net/wp-content/uploads/2020/10/0edac371-5cbf-4fce-82a8-be5ce5cd83a8-300x115.png 300w, https://www.lxlinux.net/wp-content/uploads/2020/10/0edac371-5cbf-4fce-82a8-be5ce5cd83a8-768x294.png 768w" sizes="(max-width: 1018px) 100vw, 1018px" /></a></div><div id="media_image-20" class="partner-image widget_media_image"><a href="https://blog.csdn.net/yychuyu"><img width="300" height="106" src="https://www.lxlinux.net/wp-content/uploads/2020/10/Snipaste_2020-10-24_10-32-45-300x106.png" class="image wp-image-1001  attachment-medium size-medium" alt="" style="max-width: 100%; height: auto;" srcset="https://www.lxlinux.net/wp-content/uploads/2020/10/Snipaste_2020-10-24_10-32-45-300x106.png 300w, https://www.lxlinux.net/wp-content/uploads/2020/10/Snipaste_2020-10-24_10-32-45.png 591w" sizes="(max-width: 300px) 100vw, 300px" /></a></div><div id="media_image-21" class="partner-image widget_media_image"><a href="https://github.com/coderliangxu"><img width="300" height="99" src="https://www.lxlinux.net/wp-content/uploads/2020/10/Snipaste_2020-10-24_10-36-57-300x99.png" class="image wp-image-1002  attachment-medium size-medium" alt="" style="max-width: 100%; height: auto;" srcset="https://www.lxlinux.net/wp-content/uploads/2020/10/Snipaste_2020-10-24_10-36-57-300x99.png 300w, https://www.lxlinux.net/wp-content/uploads/2020/10/Snipaste_2020-10-24_10-36-57.png 689w" sizes="(max-width: 300px) 100vw, 300px" /></a></div><div id="media_image-22" class="partner-image widget_media_image"><a href="https://space.bilibili.com/487923491"><img width="300" height="99" src="https://www.lxlinux.net/wp-content/uploads/2020/10/BILI-300x99.png" class="image wp-image-1003  attachment-medium size-medium" alt="" style="max-width: 100%; height: auto;" srcset="https://www.lxlinux.net/wp-content/uploads/2020/10/BILI-300x99.png 300w, https://www.lxlinux.net/wp-content/uploads/2020/10/BILI.png 480w" sizes="(max-width: 300px) 100vw, 300px" /></a></div><div id="media_image-23" class="partner-image widget_media_image"><a href="https://weibo.com/coderliangxu/home"><img width="300" height="92" src="https://www.lxlinux.net/wp-content/uploads/2020/10/sina-weibo-logo-png-transparent-300x92.jpeg" class="image wp-image-1004  attachment-medium size-medium" alt="" style="max-width: 100%; height: auto;" srcset="https://www.lxlinux.net/wp-content/uploads/2020/10/sina-weibo-logo-png-transparent-300x92.jpeg 300w, https://www.lxlinux.net/wp-content/uploads/2020/10/sina-weibo-logo-png-transparent-768x235.jpeg 768w, https://www.lxlinux.net/wp-content/uploads/2020/10/sina-weibo-logo-png-transparent.jpeg 805w" sizes="(max-width: 300px) 100vw, 300px" /></a></div>					</div>
+				</div>
+
+				<div class="clear"></div>
+
+			
+							<div class="friend clear">
+					<div class="friend-title clear">
+						<h3>友情链接</h3>
+						<span class="friend-desc"></span>
+						<span class="friend-link">
+																	<a href="https://www.lxlinux.net/wp-content/uploads/2020/10/企业微信美化版（自动通过添加）.png" target="_blank">
+																	交换链接 <i class="fa fa-angle-right"></i>																
+									</a>
+									
+						</span>
+					</div>
+					<div class="menu-footer-container"><ul id="friend-menu" class="friend-nav"><li id="menu-item-12466" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12466"><a target="_blank" rel="noopener noreferrer" href="https://www.javanote.net">元木Java编程笔记</a></li>
+<li id="menu-item-1288" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1288"><a target="_blank" rel="noopener noreferrer" href="https://studygolang.com/">Go语言中文网</a></li>
+<li id="menu-item-763" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-763"><a target="_blank" rel="noopener noreferrer" href="http://redstonewill.com/">红色石头</a></li>
+<li id="menu-item-764" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-764"><a target="_blank" rel="noopener noreferrer" href="https://www.cxyxiaowu.com/">五分钟学算法</a></li>
+<li id="menu-item-765" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-765"><a target="_blank" rel="noopener noreferrer" href="http://www.ityouknow.com/">纯洁的微笑</a></li>
+<li id="menu-item-1146" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1146"><a target="_blank" rel="noopener noreferrer" href="https://cuiqingcai.com">静觅</a></li>
+<li id="menu-item-1160" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1160"><a target="_blank" rel="noopener noreferrer" href="http://xuedingmiao.com/">薛定喵君</a></li>
+<li id="menu-item-1225" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1225"><a title="一个专注于程序员成长的网站" target="_blank" rel="noopener noreferrer" href="http://tanqingbo.cn/">IT码农</a></li>
+<li id="menu-item-1229" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1229"><a target="_blank" rel="noopener noreferrer" href="http://www.bugstack.cn">小傅哥</a></li>
+<li id="menu-item-1236" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1236"><a target="_blank" rel="noopener noreferrer" href="https://md.openwrite.cn/">微信公众号编辑器</a></li>
+<li id="menu-item-1241" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1241"><a target="_blank" rel="noopener noreferrer" href="https://www.runoob.com/">菜鸟教程</a></li>
+<li id="menu-item-1260" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1260"><a target="_blank" rel="noopener noreferrer" href="https://www.linuxmi.com/">Linux迷</a></li>
+<li id="menu-item-1265" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1265"><a target="_blank" rel="noopener noreferrer" href="https://www.cxyquan.com/">程序员圈</a></li>
+<li id="menu-item-1327" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1327"><a target="_blank" rel="noopener noreferrer" href="https://www.fuhao321.com/">编程软件库</a></li>
+<li id="menu-item-1522" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1522"><a target="_blank" rel="noopener noreferrer" href="http://www.dockerchina.cn/">Docker中文社区</a></li>
+<li id="menu-item-2232" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2232"><a target="_blank" rel="noopener noreferrer" href="https://www.lengyueit.cn">计算机考研</a></li>
+<li id="menu-item-10928" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-10928"><a target="_blank" rel="noopener noreferrer" href="https://www.wpon.cn">WP教学</a></li>
+</ul></div>				</div><!-- .friend -->
+				
+		</div><!-- .footer-content -->
+
+		</div><!-- .container -->		
+		
+		
+		
+		
+		<div class="bottom-content">
+			<div class="container">
+				<h3>良许Linux教程网 专注分享Linux干货</h3>
+				<div class="bottom-buttons">
+					<a target="_blank" href="https://www.lxlinux.net/wp-content/uploads/2020/11/企业微信美化版（自动通过添加）.png">联系良许</a>
+					<a target="_blank" href="https://www.lxlinux.net/wp-content/uploads/2020/10/公众号二维码（迁移后）.jpg">关注公众号</a>
+				</div>
+			</div><!-- .container -->
+		</div><!-- .bottom-content -->
+
+		
+		<div id="site-bottom" class="clear">
+
+			<div class="container">
+				
+				
+				<div class="menu-posts-container"><ul id="footer-menu" class="footer-nav"><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-781"><a href="https://www.lxlinux.net/zhuanti-full">教程列表</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1032"><a href="https://www.lxlinux.net/tags">热门标签</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-779"><a target="_blank" rel="noopener noreferrer" href="https://www.lxlinux.net/posts-by-cat">按目录分类</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-780"><a target="_blank" rel="noopener noreferrer" href="https://www.lxlinux.net/posts-100">最新100篇</a></li>
+</ul></div>	
+
+				<div class="site-info">
+
+					© 2020 <a href="https://www.lxlinux.net/" target="_blank">良许Linux教程网</a> - 一个专注分享Linux干货的网站 - <a href="https://beian.miit.gov.cn/#/Integrated/recordQuery" target="_blank" rel="nofollow">闽ICP备19018354号-7</a> - <a href="https://www.lxlinux.net/sitemap.xml" target="_blank">Sitemap</a>
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?5186f4489bf8c049cc9dec4efef4819b";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+				</div><!-- .site-info -->
+				
+			</div><!-- .container -->
+
+		</div>
+		<!-- #site-bottom -->
+							
+	</footer><!-- #colophon -->
+	
+</div><!-- #page -->
+
+<div class="bottom-right">
+		<div class="icon-contact tooltip bottom-icon">
+		<span class="icon-link">
+			<span class="icon"><i class="fa fa-phone"></i></span>
+			<span class="text">联系我们</span>
+		</span>
+	    <div class="left-space">
+		    <div class="left">
+		    	<div class="contact-info">
+			        <h3>联系我们</h3>
+
+			        			        	<strong>公众号：良许Linux</strong>
+			    	
+			    				        	<p>在线咨询: <a href="http://wpa.qq.com/msgrd?v=3&uin=1953185966&site=qq&menu=yes" target="_blank"><img src="https://www.lxlinux.net/wp-content/themes/iux/assets/img/qqchat.gif" alt="QQ交谈"/></a></p>
+			        
+			        			       		<p>邮箱: yychuyu@163.com</p>	
+			        
+			        		    	</div>
+		        <i></i>		        
+		    </div>
+		</div>				
+	</div>
+	
+		
+	<div class="icon-weixin tooltip bottom-icon">
+		<span class="icon-link">
+			<span class="icon"><i class="fa fa-wechat"></i></span>
+			<span class="text">关注微信</span>
+		</span>		
+	    <div class="left-space">
+		    <div class="left">
+		        <img src="https://www.lxlinux.net/wp-content/uploads/2020/10/企业微信美化版（自动通过添加）.png" alt="微信扫一扫关注我们"/>
+		        <h3>微信扫一扫关注我们</h3>
+		        <i></i>
+		    </div>
+		</div>		
+	</div>
+	
+		
+	<div class="icon-weibo bottom-icon">
+		<a href="https://weibo.com/coderliangxu" target="_blank">
+			<span class="icon"><i class="fa fa-weibo"></i></span>
+			<span class="text">关注微博</span>
+		</a>		
+	</div>
+	
+		<div id="back-top" class="bottom-icon">
+		<a href="#top" title="返回顶部">
+			<span class="icon"><i class="fa fa-chevron-up"></i></span>
+			<span class="text">返回顶部</span>
+		</a>
+	</div>
+	</div><!-- .bottom-right -->
+
+<script type='text/javascript' src='https://www.lxlinux.net/wp-content/themes/iux/assets/js/superfish.js?ver=5.4.4'></script>
+<script type='text/javascript' src='https://www.lxlinux.net/wp-content/themes/iux/assets/js/jquery.slicknav.js?ver=5.4.4'></script>
+<script type='text/javascript' src='https://www.lxlinux.net/wp-content/themes/iux/assets/js/modernizr.js?ver=5.4.4'></script>
+<script type='text/javascript' src='https://www.lxlinux.net/wp-content/themes/iux/assets/js/html5.js?ver=5.4.4'></script>
+<script type='text/javascript' src='https://www.lxlinux.net/wp-content/themes/iux/assets/js/jquery.bxslider.js?ver=5.4.4'></script>
+<script type='text/javascript' src='https://www.lxlinux.net/wp-content/themes/iux/assets/js/jquery.custom.js?ver=20181120'></script>
+<script type='text/javascript' src='https://www.lxlinux.net/wp-includes/js/wp-embed.min.js?ver=5.4.4'></script>
+
+<script>
+(function($){ //create closure so we can safely use $ as alias for jQuery
+
+    $(document).ready(function(){
+
+        "use strict";
+
+        /*-----------------------------------------------------------------------------------*/
+        /*  Slick Mobile Menu
+        /*-----------------------------------------------------------------------------------*/
+        $('#primary-menu').slicknav({
+            prependTo: '#slick-mobile-menu',
+            allowParentLinks: true,
+            label: '导航'
+        });    		
+
+    });
+
+})(jQuery);
+
+</script>
+
+
+
+
+<script src="https://www.lxlinux.net/wp-content/themes/iux/assets/js/sticky-sidebar.min.js"></script>
+
+<script>
+
+(function($){ //create closure so we can safely use $ as alias for jQuery
+
+    $(document).ready(function(){
+
+        "use strict";
+		$(window).load(function() {
+			var stickySidebar = new StickySidebar('#secondary', {
+				topSpacing: 20,
+				bottomSpacing: 20,
+				containerSelector: '.site_container',
+				innerWrapperSelector: '.sidebar__inner'
+			});
+		});	
+
+    });
+
+
+})(jQuery);
+</script>
+
+
+
+<script>
+(function($){ //create closure so we can safely use $ as alias for jQuery
+
+    $(document).ready(function(){
+
+        "use strict";
+
+		if ($(window).width() >= 960) {
+
+			var mn  = $(".site-header");
+			var mns = "main-nav-scrolled";
+			var hdr = $('.top-bar').height();
+  
+			$(window).scroll(function() {
+			  if( $(this).scrollTop() > hdr ) {
+			    mn.addClass(mns);
+			    $('.header-space').css('display','block');
+			  } else {
+			    mn.removeClass(mns);
+			    $('.header-space').css('display','none');
+			  }
+			});	
+
+		}
+
+    });
+
+
+})(jQuery);	
+</script>
+
+</body>
+</html>
+
+<!-- Dynamic page generated in 0.798 seconds. -->
+<!-- Cached page generated by WP-Super-Cache on 2021-12-17 23:58:29 -->
+
+<!-- Compression = gzip -->
+<!-- super cache -->

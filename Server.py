@@ -3,6 +3,7 @@ import json
 import select
 import errno
 import time
+from unittest import result
 import pymysql
 import Protocol
 import threading
@@ -10,6 +11,7 @@ from queue import Queue
 from FileServer import FileServer
 from sql import Sql
 from datetime import datetime
+import os
 
 
 def main():
@@ -52,6 +54,7 @@ class Server:
         self.groupThreads = {}
         self.fddict = {}   #绑定已连接的客户ID和对应的fd
         self.fdfiletrans = {}
+        self.adminfd = {}
 
     def initiateServer(self):
         while True:
@@ -82,6 +85,7 @@ class Server:
         self.addresses[conn.fileno()] = addr
         self.threads[conn.fileno()] = {}
         self.groupThreads[conn.fileno()] = {}
+        self.datalist[conn.fileno()] = Queue()
 
     def receiveEvent(self, fd):
         datas = ''
@@ -108,13 +112,15 @@ class Server:
                     break
 
     def writeEvent(self, fd):
-        sendLen = 0
-        while True:
-            print("bbbb" + self.datalist[fd])
-            sendLen += self.connections[fd].send(
-                (self.datalist[fd][sendLen:]).encode())
-            if sendLen == len(self.datalist[fd].encode()):
-                break
+        while self.datalist[fd].qsize() > 0:
+            sendLen = 0
+            while True:
+                msg = self.datalist[fd].get()
+                print("bbbb" + msg)
+                sendLen += self.connections[fd].send(
+                    (msg[sendLen:]).encode())
+                if sendLen == len(msg.encode()):
+                    break
         self.epoll_fd.modify(
             fd, select.EPOLLIN | select.EPOLLET | select.EPOLLERR | select.EPOLLHUP)
 
@@ -124,57 +130,70 @@ class Server:
         self.connections[fd].close()
 
     def handleReceived(self, fd, datas):
-        print(datas, len(datas))
-        dict = json.loads(datas)
-        numbers = {
-            1: self.LoginEvent,
-            2: self.RegistEvent,
-            3: self.addFriend,
-            4: self.searchFriend,
-            5: self.getMessageRecord,
-            6: self.sendMessage,
-            7: self.closeChatWindow,
-            8: self.sendFile,
-            9: self.setLogout,
-            11: self.updateHead,
-            12: self.getFileRequest,
-            13: self.deleteFriend,
-            14: self.setGroup,
-            15: self.getGroups,
-            16: self.deleteGroup,
-            17: self.sendGroupMessage,
-            18: self.getGroupMessageRecord,
-            19: self.closeGroupChatWindow,
-        }
+        print(datas, type(datas))
+        #防止粘包（多个json串在一个字符串里）
+        dec = json.JSONDecoder()
+        pos = 0
+        while not pos == len(str(datas)):
+            dict, json_len = dec.raw_decode(str(datas)[pos:])
+            pos += json_len
+            #cdict = json.loads(j)
+            numbers = {
+                1: self.LoginEvent,
+                2: self.RegistEvent,
+                3: self.addFriend,
+                4: self.searchFriend,
+                5: self.getMessageRecord,
+                6: self.sendMessage,
+                7: self.closeChatWindow,
+                8: self.sendFile,
+                9: self.setLogout,
+                11: self.updateHead,
+                12: self.getFileRequest,
+                13: self.deleteFriend,
+                14: self.setGroup,
+                15: self.getGroups,
+                16: self.deleteGroup,
+                17: self.sendGroupMessage,
+                18: self.getGroupMessageRecord,
+                19: self.closeGroupChatWindow,
+                22: self.dismissGroup,
+                23: self.addGroup,
+                25: self.changeStatus,
+                26: self.sendGroupFile,
+                27: self.getGroupFile,
+                28: self.downloadGroupFile,
+            }
 
-        method = numbers.get(dict.get("msgType"))
-        if method:
-            method(fd, dict)
+            method = numbers.get(dict.get("msgType"))
+            if method:
+                method(fd, dict)
 
     def LoginEvent(self, fd, dict):
         account = dict.get("account")
         userinfo = self.sql.searchUser(dict)
 
-        if userinfo:
-            userinfo['code'] = 1000
+        userinfo['msgType'] = 1
+        userinfo['fd'] = fd
+
+        self.datalist[fd].put(json.dumps(userinfo))
+        self.epoll_fd.modify(
+            fd, select.EPOLLIN | select.EPOLLOUT | select.EPOLLERR | select.EPOLLHUP)
+
+
+        if userinfo.get("code") == 1000 and userinfo.get("type") == 0:
             #绑定登录用户和客户端fd
             self.fddict[account] = fd
             self.fd_fileToTrans[fd] = Queue()
             self.broadcastLogin(account, 1) #广播
-        else:
-            userinfo = {'code': 1001}
+        elif userinfo.get("code") == 1000 and userinfo.get("type") == 1:
+            self.adminfd[account] = fd
 
-        userinfo['msgType'] = 1
-        userinfo['fd'] = fd
-
-        self.datalist[fd] = json.dumps(userinfo)
-        self.epoll_fd.modify(
-            fd, select.EPOLLIN | select.EPOLLOUT | select.EPOLLERR | select.EPOLLHUP)
 
     def RegistEvent(self, fd, dict):
         result = self.sql.addUser(dict)
         ret = {'code': result}
-        self.datalist[fd] = json.dumps(ret)
+        self.datalist[fd].put(json.dumps(ret))
 
         self.epoll_fd.modify(
             fd, select.EPOLLIN | select.EPOLLOUT | select.EPOLLERR | select.EPOLLHUP)
@@ -182,15 +201,41 @@ class Server:
     def addFriend(self, fd, dict):
         result = self.sql.addFriend(dict)
         ret = {'code': result, "msgType": 3}
-        self.datalist[fd] = json.dumps(ret)
+        self.datalist[fd].put(json.dumps(ret))
 
         self.epoll_fd.modify(
             fd, select.EPOLLIN | select.EPOLLOUT | select.EPOLLERR | select.EPOLLHUP)
 
+    def addGroup(self, fd, dict):
+        result = self.sql.addGroup(dict)
+        ret = {'code': result, "msgType": Protocol.Protocol.ADD_GROUP}
+
+        self.datalist[fd].put(json.dumps(ret))
+
+        self.epoll_fd.modify(
+            fd, select.EPOLLIN | select.EPOLLOUT | select.EPOLLERR | select.EPOLLHUP)
+
+
     def deleteFriend(self, fd, dataDict):
         result = self.sql.deleteFriend(dataDict)
         resultDict = dict(msgType=Protocol.Protocol.DELETEFRIEND, code = result)
-        self.datalist[fd] = json.dumps(resultDict)
+        self.datalist[fd].put(json.dumps(resultDict))
+
+        self.epoll_fd.modify(
+            fd, select.EPOLLIN | select.EPOLLOUT | select.EPOLLERR | select.EPOLLHUP)
+
+    def deleteGroup(self, fd, dataDict):
+        result = self.sql.deleteGroup(dataDict)
+        resultDict = dict(msgType=Protocol.Protocol.DELETE_GROUP, code = result)
+        self.datalist[fd].put(json.dumps(resultDict))
+
+        self.epoll_fd.modify(
+            fd, select.EPOLLIN | select.EPOLLOUT | select.EPOLLERR | select.EPOLLHUP)
+
+    def dismissGroup(self, fd, dataDict):
+        result = self.sql.dismissGroup(dataDict)
+        resultDict = dict(msgType=Protocol.Protocol.DISMISS_GROUP, code = result)
+        self.datalist[fd].put(json.dumps(resultDict))
 
         self.epoll_fd.modify(
             fd, select.EPOLLIN | select.EPOLLOUT | select.EPOLLERR | select.EPOLLHUP)
@@ -203,7 +248,7 @@ class Server:
             result = {"code": 1001}
 
         result['msgType'] = 4
-        self.datalist[fd] = json.dumps(result)
+        self.datalist[fd].put(json.dumps(result))
 
         self.epoll_fd.modify(
             fd, select.EPOLLIN | select.EPOLLOUT | select.EPOLLERR | select.EPOLLHUP)
@@ -221,7 +266,7 @@ class Server:
             result = {"code": 1001}
 
         result['msgType'] = 5
-        self.datalist[fd] = json.dumps(result, cls=Protocol.DateEncoder)
+        self.datalist[fd].put(json.dumps(result, cls=Protocol.DateEncoder))
 
         self.epoll_fd.modify(
             fd, select.EPOLLIN | select.EPOLLOUT | select.EPOLLERR | select.EPOLLHUP)
@@ -237,8 +282,8 @@ class Server:
             if result:
                 result['code'] = 1000
                 result['msgType'] = 6
-                self.datalist[fd] = json.dumps(
-                    result, cls=Protocol.DateEncoder)
+                self.datalist[fd].put(json.dumps(
+                    result, cls=Protocol.DateEncoder))
 
                 self.epoll_fd.modify(
                     fd, select.EPOLLIN | select.EPOLLOUT | select.EPOLLERR | select.EPOLLHUP)
@@ -259,26 +304,22 @@ class Server:
             result = {"code": 1001}
 
         result['msgType'] = Protocol.Protocol.GET_GROUP_MESSAGE_RECORD
-        self.datalist[fd] = json.dumps(result, cls=Protocol.DateEncoder)
+        self.datalist[fd].put(json.dumps(result, cls=Protocol.DateEncoder))
 
         self.epoll_fd.modify(
             fd, select.EPOLLIN | select.EPOLLOUT | select.EPOLLERR | select.EPOLLHUP)
 
-        #time.sleep(2)
+        result = self.sql.getGroupMembers(dict)
+        if result:
+            result['code'] = 1000
+        else:
+            result = {"code": 1001}
 
-        #result = self.sql.getGroupMembers(dict)
-        #if result:
-        #    result['code'] = 1000
-        #else:
-        #    result = {"code": 1001}
+        result['msgType'] = Protocol.Protocol.GET_GROUP_MEMBERS
+        self.datalist[fd].put(json.dumps(result, cls=Protocol.DateEncoder))
 
-        #result['msgType'] = Protocol.Protocol.GET_GROUP_MEMBERS
-        #self.datalist[fd] = json.dumps(result, cls=Protocol.DateEncoder)
-
-        ##print("fddddddddddddddddddddddddddddd" + self.datalist[fd])
-
-        #self.epoll_fd.modify(
-        #    fd, select.EPOLLIN | select.EPOLLOUT | select.EPOLLERR | select.EPOLLHUP)
+        self.epoll_fd.modify(
+            fd, select.EPOLLIN | select.EPOLLOUT | select.EPOLLERR | select.EPOLLHUP)
 
 
     def groupMessageThreadTarget(self, dict, fd):
@@ -292,8 +333,8 @@ class Server:
             if result:
                 result['code'] = 1000
                 result['msgType'] = Protocol.Protocol.GET_NEW_GROUP_MESSAGE
-                self.datalist[fd] = json.dumps(
-                    result, cls=Protocol.DateEncoder)
+                self.datalist[fd].put(json.dumps(
+                    result, cls=Protocol.DateEncoder))
 
                 self.epoll_fd.modify(
                     fd, select.EPOLLIN | select.EPOLLOUT | select.EPOLLERR | select.EPOLLHUP)
@@ -321,12 +362,22 @@ class Server:
 
     def setLogout(self, fd, dict):
         result = self.sql.Logout(dict)
-        if result == 1000:
+        if result == 1000 and dict.get("type") == 0:
             account = dict.get("account")
             self.broadcastLogin(account, 0)
             self.fileserver.closeEvent(fd)
             self.fddict.pop(account)
             print("setlogout", self.fddict)
+        elif result == 1000 and dict.get("type") == 1:
+            account = dict.get("account")
+            self.adminfd.pop(account)
+
+    def changeStatus(self, fd, dict):
+        result = self.sql.changeStatus(dict)
+        if result == 1000:
+            account = dict.get("account")
+            self.broadcastLogin(account, dict.get("status"))
+
 
     def sendFile(self, fd, dict):
         pass
@@ -334,19 +385,36 @@ class Server:
     #广播登录信息或登出信息
     def broadcastLogin(self, account, flag):
         #找到登录登出人员对应的好友
-        result = self.sql.searchFriend({"account": account})
-        #向在线的好友广播状态
-        for data in result.get("friends"):
-            friend_account = data['account_2'] if data.__contains__(
-                'account_2') else data['account_1']
-            clientFd = self.fddict.get(friend_account)
-            if clientFd:
-                result = dict(msgType=Protocol.Protocol.broadcastLogin, account=account, flag=flag)
-                self.datalist[clientFd] = json.dumps(
-                    result, cls=Protocol.DateEncoder)
+        friend_info = self.sql.searchFriend({"account": account})
+        group_info = self.sql.getGroups({"account":account})
 
+        if friend_info:
+            #向在线的好友广播状态
+            for data in friend_info.get("friends"):
+                friend_account = data['account_2'] if data.__contains__(
+                    'account_2') else data['account_1']
+                clientFd = self.fddict.get(friend_account)
+                if clientFd:
+                    result = dict(msgType=Protocol.Protocol.broadcastLogin, account=account, flag=flag)
+                    self.datalist[clientFd].put(json.dumps(
+                        result, cls=Protocol.DateEncoder))
+    
+                    self.epoll_fd.modify(
+                        clientFd, select.EPOLLIN | select.EPOLLOUT | select.EPOLLERR | select.EPOLLHUP)
+
+
+        if group_info:
+            for user in self.fddict:
+                clientFd = self.fddict.get(user)
+                for group in group_info.get("groups"):
+                    result = dict(msgType=Protocol.Protocol.BROADCAST_GROUP_LOGIN, groupid = group.get("groupid"), account=account, flag=flag)
+                    self.datalist[clientFd].put(json.dumps(
+                        result, cls=Protocol.DateEncoder))
+    
                 self.epoll_fd.modify(
                     clientFd, select.EPOLLIN | select.EPOLLOUT | select.EPOLLERR | select.EPOLLHUP)
+
+
 
     def updateHead(self, fd, dictData):
         result = self.sql.updateHead(dictData)
@@ -357,7 +425,7 @@ class Server:
             msg = dict(msgType=Protocol.Protocol.HEADSCUL, code=1001)
 
                 
-        self.datalist[fd] = json.dumps(msg, cls=Protocol.DateEncoder)
+        self.datalist[fd].put(json.dumps(msg, cls=Protocol.DateEncoder))
         self.epoll_fd.modify(
             fd, select.EPOLLIN | select.EPOLLOUT | select.EPOLLERR | select.EPOLLHUP)
 
@@ -368,7 +436,6 @@ class Server:
         def waitFileTransReady(fd):
             while True:
                 if self.fileserver.fdIsReady(fd):
-                    print("ookk")
                     self.fileserver.putFilePath(fd, data.get("filepath"))
                     break
 
@@ -383,7 +450,7 @@ class Server:
         else:
             msg = dict(msgType=Protocol.Protocol.SETGROUP, code=1001)
 
-        self.datalist[fd] = json.dumps(msg, cls=Protocol.DateEncoder)
+        self.datalist[fd].put(json.dumps(msg, cls=Protocol.DateEncoder))
         self.epoll_fd.modify(
             fd, select.EPOLLIN | select.EPOLLOUT | select.EPOLLERR | select.EPOLLHUP)
 
@@ -395,14 +462,45 @@ class Server:
             result = {"code": 1001}
 
         result['msgType'] = Protocol.Protocol.GETGROUPS
-        self.datalist[fd] = json.dumps(result)
+        self.datalist[fd].put(json.dumps(result))
 
         self.epoll_fd.modify(
             fd, select.EPOLLIN | select.EPOLLOUT | select.EPOLLERR | select.EPOLLHUP)
 
-    def deleteGroup(self, fd, dict):
-        result = self.sql.deleteGroup(dict)
+    def sendGroupFile(self, fd, data):
+        result = self.sql.sendGroupFile(data)
+        result['msgType'] = Protocol.Protocol.SEND_GROUP_FILE
+        self.datalist[fd].put(json.dumps(result, cls = Protocol.DateEncoder))
 
+        self.epoll_fd.modify(
+            fd, select.EPOLLIN | select.EPOLLOUT | select.EPOLLERR | select.EPOLLHUP)
+
+    def getGroupFile(self, fd, data):
+        result = self.sql.getGroupFile(data)
+        print(result)
+        if result:
+            result['msgType'] = Protocol.Protocol.GET_GROUP_FILE
+            result['groupid'] = data.get("groupid")
+            result['code'] = 1000
+        else:
+            result ={'code': 1001 }
+
+        self.datalist[fd].put(json.dumps(result, cls = Protocol.DateEncoder))
+
+        self.epoll_fd.modify(
+            fd, select.EPOLLIN | select.EPOLLOUT | select.EPOLLERR | select.EPOLLHUP)
+
+            
+    def downloadGroupFile(self, fd, data):
+        groupid = data.get("groupid")
+        for file in data.get("files"):
+            result = self.sql.downloadGroupFile(file, groupid)
+            
+            dataDict = dict(mgType = Protocol.Protocol.DOWNLOAD_GROUP_FILE, code = result, path = file, groupid = groupid)
+            self.datalist[fd].put(json.dumps(dataDict, cls = Protocol.DateEncoder))
+
+            self.epoll_fd.modify(
+                fd, select.EPOLLIN | select.EPOLLOUT | select.EPOLLERR | select.EPOLLHUP)
 
 
 if __name__ == "__main__":
