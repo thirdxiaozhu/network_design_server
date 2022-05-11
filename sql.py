@@ -1,9 +1,7 @@
 from tokenize import group
 import pymysql
 import random
-import os
 from Protocol import Protocol
-from datetime import datetime
 
 
 class Sql:
@@ -22,25 +20,26 @@ class Sql:
         print("Database version : %s " % data)
 
     def addUser(self, dict):
+
         sql = "INSERT INTO Users(account, password, nickname) VALUES(%s,%s,%s);"
         try:
             self.cursor.execute(
-                sql, (dict.get("id"), dict.get("password"), dict.get("nickname")))
+                sql, (dict.get("id"), dict.get("password_hash"), dict.get("nickname")))
             self.db.commit()
             return 1000
-        except:
+        except Exception as e:
+            print(e)
             # 如果发生错误则回滚
             self.db.rollback()
             return 1001
 
     def searchUser(self, dict):
-        sql = "SELECT `account`, `nickname`, `signature`, `isonline`, `headscul`,`type` FROM `Users` WHERE `account` = %s AND `password` = %s;"
+        sql = "SELECT `account`, `password`, `nickname`, `signature`, `isonline`, `headscul`,`type` FROM `Users` WHERE `account` = %s;"
         try:
-            self.cursor.execute(
-                sql, (dict.get("account"), dict.get("password")))
+            self.cursor.execute(sql, (dict.get("account")))
             result = self.cursor.fetchone()
             #如果用户存在并且未登录
-            if result and result.get("isonline") == 0:
+            if result and result.get("isonline") == 0 and result.get("password") == dict.get("password_hash"):
                 sql_1 = "UPDATE `Users` SET `isonline` = %s WHERE `account` = %s;"
                 self.cursor.execute(sql_1, (1, dict.get("account")))
                 self.db.commit()
@@ -95,7 +94,8 @@ class Sql:
             self.cursor.execute(sql_1, (dict.get("target")))
             result_1 = self.cursor.fetchone()
 
-            self.cursor.execute(sql_2, (dict.get("target"), dict.get("account")))
+            self.cursor.execute(
+                sql_2, (dict.get("target"), dict.get("account")))
             result_2 = self.cursor.fetchone()
 
             #如果用户存在并且Friends表中没有这俩人好友关系
@@ -115,7 +115,6 @@ class Sql:
             self.db.rollback()
             return 0
 
-
     def deleteFriend(self, dict):
         sql_1 = """
                     DELETE FROM `SingalChats` WHERE (`sender` = %s AND `recipient` = %s) OR (`sender` = %s AND `recipient` = %s);
@@ -124,9 +123,11 @@ class Sql:
                     DELETE FROM `Friends` WHERE (`account_1` = %s AND `account_2` = %s) OR (`account_1` = %s AND `account_2` = %s);
                 """
         try:
-            self.cursor.execute(sql_1, (dict.get("account"), dict.get("target"), dict.get("target"), dict.get("account")))
+            self.cursor.execute(sql_1, (dict.get("account"), dict.get(
+                "target"), dict.get("target"), dict.get("account")))
             self.db.commit()
-            self.cursor.execute(sql_2, (dict.get("account"), dict.get("target"), dict.get("target"), dict.get("account")))
+            self.cursor.execute(sql_2, (dict.get("account"), dict.get(
+                "target"), dict.get("target"), dict.get("account")))
             self.db.commit()
 
             return 1000
@@ -153,7 +154,7 @@ class Sql:
             return 0
 
     def sendMessage(self, dict):
-        type = dict.get("msgType") 
+        type = dict.get("msgType")
         if type == Protocol.SENDMESSAGE:
             sql = "INSERT INTO `SingalChats`(`sender`, `recipient`, `message`,`form`) VALUES(%s,%s,%s,%s);"
         elif type == Protocol.SENDGROUPMESSAGE:
@@ -273,7 +274,8 @@ class Sql:
     def updateHead(self, dict):
         sql = "UPDATE `Users` SET `headscul` = %s WHERE `account` = %s;"
         try:
-            self.cursor.execute(sql, (dict.get("filepath"), dict.get("account")))
+            self.cursor.execute(
+                sql, (dict.get("filepath"), dict.get("account")))
             self.db.commit()
             return 1000
         except Exception as e:
@@ -294,7 +296,8 @@ class Sql:
                 result = self.cursor.fetchone()
                 if result is None:
                     break
-            self.cursor.execute(sql_2, (groupid, dict.get("groupname"), dict.get("account"), dict.get("picpath")))
+            self.cursor.execute(sql_2, (groupid, dict.get(
+                "groupname"), dict.get("account"), dict.get("picpath")))
             self.db.commit()
             self.cursor.execute(sql_3, (groupid, dict.get("account")))
             self.db.commit()
@@ -342,11 +345,12 @@ class Sql:
                     DELETE FROM `GroupMember` WHERE `userid` = %s AND `groupid` = %s;
                 """
         try:
-            self.cursor.execute(sql_1, (dict.get("account"), dict.get("target")))
+            self.cursor.execute(
+                sql_1, (dict.get("account"), dict.get("target")))
             self.db.commit()
-            self.cursor.execute(sql_2, (dict.get("account"), dict.get("target")))
+            self.cursor.execute(
+                sql_2, (dict.get("account"), dict.get("target")))
             self.db.commit()
-
             return 1000
         except Exception as e:
             print(e)
@@ -386,9 +390,11 @@ class Sql:
         sql_2 = """SELECT `groupid`, `uploader`, `uploadtime`, `path`, `times` FROM `GroupFile` WHERE `groupid` = %s AND `uploader` = %s  AND `path` = %s
                 """
         try:
-            self.cursor.execute(sql, (dict.get("groupid"), dict.get("uploader"), dict.get("path")))
+            self.cursor.execute(
+                sql, (dict.get("groupid"), dict.get("uploader"), dict.get("path")))
             self.db.commit()
-            self.cursor.execute(sql_2, (dict.get("groupid"), dict.get("uploader"), dict.get("path")))
+            self.cursor.execute(
+                sql_2, (dict.get("groupid"), dict.get("uploader"), dict.get("path")))
             result = self.cursor.fetchone()
 
             result['code'] = 1000
@@ -424,10 +430,24 @@ class Sql:
             self.db.rollback()
             return 1001
 
+    def saveProfile(self, dataDict):
+        print(dataDict)
+        sql = "UPDATE `Users` SET `password` = %s, `nickname` = %s, `signature` = %s WHERE `account` = %s;"
+        sql_no_password = "UPDATE `Users` SET `nickname` = %s, `signature` = %s WHERE `account` = %s;"
+        try:
+            if dataDict.get("password_hash") != "":
+                self.cursor.execute(sql, (dataDict.get("password_hash"), dataDict.get(
+                    "nickname"), dataDict.get("signature"), dataDict.get("account")))
+            else:
+                self.cursor.execute(sql_no_password, (dataDict.get(
+                    "nickname"), dataDict.get("signature"), dataDict.get("account")))
+            self.db.commit()
+            return 1000
+        except Exception as e:
+            print(e)
+            # 如果发生错误则回滚
+            self.db.rollback()
+            return 1001
 
     def __del__(self):
         self.db.close()
-
-
-if __name__ == "__main__":
-    sql = Sql()
